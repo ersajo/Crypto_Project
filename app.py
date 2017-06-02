@@ -12,7 +12,7 @@ flag = False
 app = Flask(__name__)
 
 def EncryptDES(key, text):
-    print "aqui"
+    logs("aqui")
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     while True:
         if len(text) == 0:
@@ -153,7 +153,7 @@ def log(message):  # simple wrapper for logging to stdout on heroku
     sys.stdout.flush()
 
 def logs(message):  # simple wrapper for logging to stdout on heroku
-    print "este" + str(message)
+    print message
     sys.stdout.flush()
 
 
