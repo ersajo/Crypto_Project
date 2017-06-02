@@ -7,9 +7,17 @@ from Crypto import Random
 import requests
 from flask import Flask, request
 
+flag = False
 app = Flask(__name__)
 
-#def EncryptDES(key, text):
+def EncryptDES(key, text):
+    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    while True:
+        if len(text) == 0:
+            break
+        elif len(text) % 16 != 0:
+            text += ' ' * (16 - len(text) % 16)
+        ciphertext = cipher.encrypt(text)
 
 
 @app.route('/', methods=['GET'])
@@ -47,10 +55,12 @@ def webhook():
                     elif len(message_text) == 8:
                         key = message_text
                         send_menu(sender_id, "What do you want to do next?")
-                    elif message_text == "Decrypt":
-                        send_message(sender_id,"Kyc")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
+                    elif(flag = True && message_text != ""):
+                        text = message_text
+                        send_message(sender_id, EncryptDES)
+
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -59,19 +69,15 @@ def webhook():
                     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
+
                     sender_id = messaging_event["sender"]["id"]
                     respuesta = messaging_event["postback"]["payload"]
                     if respuesta == "Encrypt":
-                        send_message(sender_id,"Bien hecho")
-                    logs(messaging_event)
-
+                        send_message(sender_id, "Write the text that you want to encrypt...")
+                        flag = True
+                    elif message_text == "Decrypt":
+                        send_message(sender_id,"Kyc")
     return "ok", 200
-
-def encrypt_btn(sender_id):
-    send_message(sender_id, "Write the text that you want to encrypt...")
-    with messaging_event.get("message") as message:
-        text = message["message"]["text"]
-        send_message(sender_id, text)
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
