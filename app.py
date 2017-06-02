@@ -65,7 +65,7 @@ def webhook():
                     #elif (key != "" and message_text != "" and flag == True):
                     elif message_text == "Nose":
                         text = message_text
-                        send_message(sender_id, EncryptDES(key,text,flag))
+                        send_message(sender_id, EncryptDES(key,text))
 
 
                 if messaging_event.get("delivery"):  # delivery confirmation
