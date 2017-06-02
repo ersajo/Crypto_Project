@@ -9,16 +9,17 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-def EncryptDES(key, text):
-    cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    while True:
-        if len(text) == 0:
-            break
-        elif len(text) % 16 != 0:
-            text += ' ' * (16 - len(text) % 16)
-        ciphertext = cipher.encrypt(text)
-    flag = False
-    return ciphertext
+def EncryptDES(key, text, flag):
+    if flag == True:
+        cipher = DES.new(key, DES.MODE_OFB, '12345678')
+        while True:
+            if len(text) == 0:
+                break
+            elif len(text) % 16 != 0:
+                text += ' ' * (16 - len(text) % 16)
+            ciphertext = cipher.encrypt(text)
+        flag = False
+        return ciphertext
 
 
 @app.route('/', methods=['GET'])
@@ -58,9 +59,9 @@ def webhook():
                         send_menu(sender_id, "What do you want to do next?")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
-                    elif(flag == True):
+                    else:
                         text = message_text
-                        send_message(sender_id, EncryptDES(key,text))
+                        send_message(sender_id, EncryptDES(key,text,flag))
 
 
                 if messaging_event.get("delivery"):  # delivery confirmation
