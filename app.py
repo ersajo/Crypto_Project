@@ -41,11 +41,9 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
                     if message_text ==  "Hola":
-                        send_message(sender_id, "Inserta una llave de 8 caracteres")
-                            if messaging_event.get("message"):
-                                message_key= messaging_event["message"]["text"]
-                                if len(message_key) == 8:
-                                    send_message(sender_id, "LLave correcta " + message_key)
+                        send_message(sender_id, "Hola, Soy Cryp2me. Inserta una llave de 8 caracteres")
+                    elif len(message_text) == 8:
+                        send_menu(sender_id,"What do you want to do next?")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
 
@@ -60,6 +58,40 @@ def webhook():
 
     return "ok", 200
 
+def send_menu(recipient_id, message_text):
+    log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type: application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+        "id": recipient_id
+        },
+        "message":{
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"button",
+                    "text": message_text,
+                    "buttons":[
+                        {
+                            "type":"postback",
+                            "title":"Encrypt"
+                            "payload":"USER_DEFINED_PAYLOAD"
+                        }
+                    ]
+                }
+            }
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 def send_message(recipient_id, message_text):
 
