@@ -57,7 +57,7 @@ def webhook():
                         send_menu(sender_id, "What do you want to do next?")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
-                    elif(flag == True and message_text != ""):
+                    elif(flag == True):
                         text = message_text
                         send_message(sender_id, EncryptDES)
 
