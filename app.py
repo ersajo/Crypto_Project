@@ -92,7 +92,7 @@ def send_menu(recipient_id, message_text):
                         {
                             "type":"postback",
                             "title":"Encrypt",
-                            "payload":encrypt_btn(recipient_id)
+                            "payload":"Encrypt"
                         },
                         {
                             "type":"postback",
