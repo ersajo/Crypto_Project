@@ -9,6 +9,8 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+def EncryptDES(key, text):
+
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -41,9 +43,17 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
                     if message_text ==  "Hola":
-                        send_message(sender_id, "Hola, Soy Cryp2me. Inserta una llave de 8 caracteres")
+                        send_message(sender_id, "Hi, I'm Crypt2me. Write a 8 byte key...")
                     elif len(message_text) == 8:
+                        key = message_text
                         send_menu(sender_id, "What do you want to do next?")
+                    elif message_text = "Encrypt":
+                        send_message(sender_id, "Write the text that you want to encrypt...")
+                        with messaging_event.get("message") as message:
+                            text = message["message"]["text"]
+                            send_message(sender_id, text)
+                    elif message_text = "Decrypt":
+
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
 
