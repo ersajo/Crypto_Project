@@ -7,10 +7,6 @@ from Crypto import Random
 import requests
 from flask import Flask, request
 
-flag = False
-key = ""
-text = ""
-
 app = Flask(__name__)
 
 def EncryptDES(key, text):
@@ -25,6 +21,9 @@ def EncryptDES(key, text):
     flag = False
     return ciphertext
 
+flag = False
+key = ""
+text = ""
 
 @app.route('/', methods=['GET'])
 def verify():
