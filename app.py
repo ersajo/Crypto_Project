@@ -59,8 +59,7 @@ def webhook():
                     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    if messaging_event["title"] == "Encrypt":
-                        send_message(sender_id, "Bien hecho")
+                    log(messaging_event)
 
     return "ok", 200
 
