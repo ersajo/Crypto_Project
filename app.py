@@ -81,12 +81,12 @@ def send_menu(recipient_id, message_text):
                         {
                             "type":"postback",
                             "title":"Encrypt"
-                            "payload":"USER_DEFINED_PAYLOAD"
+                            "payload":"25645"
                         },
                         {
                             "type":"postback",
                             "title":"Decrypt"
-                            "payload":"USER_DEFINED_PAYLOAD"
+                            "payload":"25645"
                         }
                     ]
                 }
