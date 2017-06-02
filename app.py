@@ -18,11 +18,15 @@ def EncryptDES(key, text):
             text += ' ' * (16 - len(text) % 16)
         ciphertext = cipher.encrypt(text)
     flag = False
+    key = ""
+    text = ""
+    message_text = ""
     return ciphertext
 
 flag = False
 key = ""
 text = ""
+message_text = ""
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -40,11 +44,6 @@ def verify():
 def webhook():
 
     # endpoint for processing incoming messaging events
-    flag = False
-    key = ""
-    text = ""
-    message_text = ""
-
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
     logs("key: " + key)
