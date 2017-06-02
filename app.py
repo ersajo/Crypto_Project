@@ -63,7 +63,7 @@ def webhook():
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
                     #elif (key != "" and message_text != "" and flag == True):
-                elif message_text == "test":
+                    elif message_text == "test":
                         text = message_text
                         send_message(sender_id, EncryptDES(key,text))
 
