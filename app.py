@@ -10,7 +10,6 @@ from flask import Flask, request
 app = Flask(__name__)
 
 def EncryptDES(key, text):
-    logs("aqui")
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     while True:
         if len(text) == 0:
@@ -48,7 +47,7 @@ def webhook():
 
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
-
+    logs(key)
     if data["object"] == "page":
 
         for entry in data["entry"]:
