@@ -44,6 +44,7 @@ def webhook():
     flag = False
     key = ""
     text = ""
+    message_text = ""
 
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
@@ -66,7 +67,7 @@ def webhook():
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
                     #elif (key != "" and message_text != "" and flag == True):
-                    elif message_text == "Test":
+                elif message_text == "prueba":
                         text = message_text
                         send_message(sender_id, EncryptDES(key,text))
 
