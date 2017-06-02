@@ -43,7 +43,7 @@ def webhook():
                     if message_text ==  "Hola":
                         send_message(sender_id, "Hola, Soy Cryp2me. Inserta una llave de 8 caracteres")
                     elif message_text == "diamante":
-                        send_menu(recipient_id, "What do you want to do next?")
+                        send_menu(sender_id, "What do you want to do next?")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
 
@@ -65,7 +65,7 @@ def send_menu(recipient_id, message_text):
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
     }
     headers = {
-        "Content-Type: application/json"
+        "Content-Type": "application/json"
     }
     data = json.dumps({
         "recipient": {
