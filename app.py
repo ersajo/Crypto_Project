@@ -18,6 +18,7 @@ def EncryptDES(key, text):
         elif len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
         ciphertext = cipher.encrypt(text)
+    flag = False
 
 
 @app.route('/', methods=['GET'])
@@ -57,7 +58,7 @@ def webhook():
                         send_menu(sender_id, "What do you want to do next?")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
-                    elif(flag = True && message_text != ""):
+                    elif(flag == True && message_text != ""):
                         text = message_text
                         send_message(sender_id, EncryptDES)
 
