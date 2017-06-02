@@ -9,7 +9,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-def EncryptDES(key, text):
+#def EncryptDES(key, text):
 
 
 @app.route('/', methods=['GET'])
