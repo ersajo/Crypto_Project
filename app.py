@@ -8,6 +8,8 @@ import requests
 from flask import Flask, request
 
 flag = False
+key = ""
+text = ""
 
 app = Flask(__name__)
 
@@ -41,7 +43,7 @@ def webhook():
 
     # endpoint for processing incoming messaging events
 
-    key = ""
+
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
 
