@@ -53,7 +53,7 @@ def webhook():
                             text = message["message"]["text"]
                             send_message(sender_id, text)
                     elif message_text == "Decrypt":
-
+                        send_message(sender_id,"Kyc")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
 
