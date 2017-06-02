@@ -7,9 +7,12 @@ from Crypto import Random
 import requests
 from flask import Flask, request
 
+flag = False
+
 app = Flask(__name__)
 
-def EncryptDES(key, text, flag):
+def EncryptDES(key, text):
+    print "aqui"
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     while True:
         if len(text) == 0:
@@ -37,7 +40,7 @@ def verify():
 def webhook():
 
     # endpoint for processing incoming messaging events
-    flag = False
+
     key = ""
     data = request.get_json()
     log(data)  # you may not want to log every incoming message in production, but it's good for testing
