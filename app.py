@@ -63,6 +63,12 @@ def webhook():
 
     return "ok", 200
 
+def encrypt_btn():
+    send_message(sender_id, "Write the text that you want to encrypt...")
+    with messaging_event.get("message") as message:
+        text = message["message"]["text"]
+        send_message(sender_id, text)
+
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
@@ -86,10 +92,7 @@ def send_menu(recipient_id, message_text):
                         {
                             "type":"postback",
                             "title":"Encrypt",
-                            "payload":send_message(sender_id, "Write the text that you want to encrypt...")
-                            with messaging_event.get("message") as message:
-                                text = message["message"]["text"]
-                                send_message(sender_id, text)
+                            "payload":encrypt_btn()
                         },
                         {
                             "type":"postback",
