@@ -1,6 +1,8 @@
 import os
 import sys
 import json
+from Crypto.Cipher import DES
+from Crypto import Random
 
 import requests
 from flask import Flask, request
