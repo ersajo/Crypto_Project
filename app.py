@@ -42,7 +42,6 @@ def webhook():
                     message_text = messaging_event["message"]["text"]  # the message's text
                     if message_text ==  "Hola":
                         send_message(sender_id, "Inserta una llave de 8 caracteres")
-                        while True:
                             if messaging_event.get("message"):
                                 message_key= messaging_event["message"]["text"]
                                 if len(message_key) == 8:
