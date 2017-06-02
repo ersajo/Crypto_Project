@@ -80,13 +80,13 @@ def send_menu(recipient_id, message_text):
                     "buttons":[
                         {
                             "type":"postback",
-                            "title":"Encrypt"
-                            "payload":"25645"
+                            "title":"Encrypt",
+                            "payload":"Encrypt"
                         },
                         {
                             "type":"postback",
-                            "title":"Decrypt"
-                            "payload":"25645"
+                            "title":"Decrypt",
+                            "payload":"Decrypt"
                         }
                     ]
                 }
