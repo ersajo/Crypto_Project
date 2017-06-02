@@ -18,15 +18,15 @@ def EncryptDES(key, text):
             text += ' ' * (16 - len(text) % 16)
         ciphertext = cipher.encrypt(text)
     flag = False
-    key = ""
-    text = ""
-    message_text = ""
+    key = " "
+    text = " "
+    message_text = " "
     return ciphertext
 
 flag = False
-key = ""
-text = ""
-message_text = ""
+key = " "
+text = " "
+message_text = " "
 
 @app.route('/', methods=['GET'])
 def verify():
