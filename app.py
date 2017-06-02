@@ -60,7 +60,7 @@ def webhook():
                         send_message(sender_id, "Di Adios")
                     elif(flag == True):
                         text = message_text
-                        send_message(sender_id, EncryptDES)
+                        send_message(sender_id, EncryptDES(key,text))
 
 
                 if messaging_event.get("delivery"):  # delivery confirmation
