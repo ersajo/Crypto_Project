@@ -63,7 +63,7 @@ def webhook():
 
     return "ok", 200
 
-def encrypt_btn():
+def encrypt_btn(sender_id):
     send_message(sender_id, "Write the text that you want to encrypt...")
     with messaging_event.get("message") as message:
         text = message["message"]["text"]
@@ -92,7 +92,7 @@ def send_menu(recipient_id, message_text):
                         {
                             "type":"postback",
                             "title":"Encrypt",
-                            "payload":encrypt_btn()
+                            "payload":encrypt_btn(recipient_id)
                         },
                         {
                             "type":"postback",
