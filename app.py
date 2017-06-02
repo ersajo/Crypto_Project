@@ -44,7 +44,7 @@ def webhook():
                         send_message(sender_id, "Inserta una llave de 8 caracteres")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
-                    elif message_text.length == 8:
+                    elif len(message_text) == 8:
                         send_message(sender_id, "LLave correcta")
 
                 if messaging_event.get("delivery"):  # delivery confirmation
