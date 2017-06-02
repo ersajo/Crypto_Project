@@ -59,7 +59,7 @@ def webhook():
                     pass
 
                 if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-                    log("este" + messaging_event)
+                    logs(messaging_event)
 
     return "ok", 200
 
@@ -135,6 +135,10 @@ def send_message(recipient_id, message_text):
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
+    sys.stdout.flush()
+
+def logs(message):  # simple wrapper for logging to stdout on heroku
+    print "este" + str(message)
     sys.stdout.flush()
 
 
