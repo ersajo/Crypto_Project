@@ -47,12 +47,12 @@ def webhook():
                     elif len(message_text) == 8:
                         key = message_text
                         send_menu(sender_id, "What do you want to do next?")
-                    elif message_text = "Encrypt":
+                    elif message_text == "Encrypt":
                         send_message(sender_id, "Write the text that you want to encrypt...")
                         with messaging_event.get("message") as message:
                             text = message["message"]["text"]
                             send_message(sender_id, text)
-                    elif message_text = "Decrypt":
+                    elif message_text == "Decrypt":
 
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
