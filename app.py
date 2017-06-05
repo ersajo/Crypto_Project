@@ -9,26 +9,6 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-def EncryptDES(key, text):
-    logs("key: " + key)
-    cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    while True:
-        if len(text) == 0:
-            break
-        elif len(text) % 16 != 0:
-            text += ' ' * (16 - len(text) % 16)
-        ciphertext = cipher.encrypt(text)
-    flag = False
-    key = " "
-    text = " "
-    message_text = " "
-    return ciphertext
-
-#flag = False
-#key = " "
-#text = " "
-#message_text = " "
-
 @app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
@@ -85,6 +65,21 @@ def webhook():
                     elif message_text == "Decrypt":
                         send_message(sender_id,"Kyc")
     return "ok", 200
+
+def EncryptDES(key, text):
+    logs("text: " + text)
+    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    while True:
+        if len(text) == 0:
+            break
+        elif len(text) % 16 != 0:
+            text += ' ' * (16 - len(text) % 16)
+        ciphertext = cipher.encrypt(text)
+    flag = False
+    key = " "
+    text = " "
+    message_text = " "
+    return ciphertext
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
