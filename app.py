@@ -121,14 +121,14 @@ def logs(message):  # simple wrapper for logging to stdout on heroku
 
 def EncryptDES(key, text,recipient_id):
     logs("text: " + text)
-    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    """cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/file.txt', 'w') as out_file:
             while True:
                 if len(text) == 0:
                     break
                 elif len(text) % 16 != 0:
                     text += ' ' * (16 - len(text) % 16)
-                out_file.write(cipher.encrypt(text))
+                out_file.write(cipher.encrypt(text))"""
     bot.send_file(recipient_id, 'tmp/file.txt')
 
 
