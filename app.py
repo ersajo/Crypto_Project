@@ -59,12 +59,17 @@ def webhook():
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
                             bot.send_text_message(recipient_id,'clearing')
-                        elif len(message) != 8 and flag_hola == True:
+                        elif len(message) != 8 and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
+                            set_flag(False)
                             set_flag_hola(True)
+                            set_flag_encrypt(False)
+                            set_flag_decrypt(False)
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
-                        elif len(message) == 8 and flag_hola == True:
-                            set_flag_hola(False)
+                        elif len(message) == 8 and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
                             set_flag(True)
+                            set_flag_hola(False)
+                            set_flag_encrypt(False)
+                            set_flag_decrypt(False)
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
@@ -74,12 +79,16 @@ def webhook():
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
                     if postback == "Encrypt":
-                        set_flag_encrypt(True)
                         set_flag(False)
+                        set_flag_hola(False)
+                        set_flag_encrypt(True)
+                        set_flag_decrypt(False)
                         bot.send_text_message(recipient_id, "Write the text that you want to encrypt...")
                     elif postback == "Decrypt":
-                        set_flag_decrypt(True)
                         set_flag(False)
+                        set_flag_hola(False)
+                        set_flag_encrypt(False)
+                        set_flag_decrypt(True)
                         bot.send_text_message(recipient_id, 'Well done')
 
         return "Success"
