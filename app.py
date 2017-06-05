@@ -3,6 +3,8 @@ import sys
 import json
 import six
 import requests
+from Crypto.Cipher import DES
+from Crypto import Random
 from flask import Flask, request
 from pymessenger.bot import Bot
 
@@ -112,6 +114,19 @@ def log(message):  # simple wrapper for logging to stdout on heroku
 def logs(message):  # simple wrapper for logging to stdout on heroku
     print message
     sys.stdout.flush()
+
+def EncryptDES(key, text, recipient_id):
+    logs("text: " + text)
+    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    with open('tmp/file', 'w') as out_file:
+            while True:
+                chunk = in_file.read()
+                if len(chunk) == 0:
+                    break
+                elif len(chunk) % 16 != 0:
+                    chunk += ' ' * (16 - len(chunk) % 16)
+                out_file.write(cipher.encrypt(chunk))
+                
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
