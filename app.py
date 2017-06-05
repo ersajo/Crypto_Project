@@ -65,9 +65,11 @@ def webhook():
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
                     if postback == "Encrypt":
+                        set_flag(False)
                         set_flag_encrypt(True)
                         bot.send_text_message(recipient_id, "Write the text that you want to encrypt...")
                     elif postback == "Decrypt":
+                        set_flag(False)
                         set_flag_decrypt(True)
                         bot.send_text_message(recipient_id, 'Well done')
         return "Success"
