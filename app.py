@@ -40,6 +40,7 @@ def webhook():
                             set_flag(True)
                         elif message == 'Prueba2' and flag == True:
                             bot.send_text_message(recipient_id, 'Hola')
+                            set_flag(False)
                         else:
                             pass
                     else:
