@@ -48,7 +48,9 @@ def webhook():
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
-                        elif len(key) == 8:
+                        elif len(key) == 8 and message != 'clear':
+                            EncryptDES(key,text)
+                            set_text(message)
                             bot.send_text_message(recipient_id, 'message')
                             set_flag_encrypt(False)
                         elif message == "clear":
@@ -115,10 +117,10 @@ def logs(message):  # simple wrapper for logging to stdout on heroku
     print message
     sys.stdout.flush()
 
-def EncryptDES(key, text, recipient_id):
+def EncryptDES(key, text):
     logs("text: " + text)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    with open('tmp/file', 'w') as out_file:
+    with open('tmp/file.txt', 'w') as out_file:
             while True:
                 chunk = in_file.read()
                 if len(chunk) == 0:
@@ -126,7 +128,7 @@ def EncryptDES(key, text, recipient_id):
                 elif len(chunk) % 16 != 0:
                     chunk += ' ' * (16 - len(chunk) % 16)
                 out_file.write(cipher.encrypt(chunk))
-                
+
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
