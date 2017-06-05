@@ -7,6 +7,9 @@ from Crypto import Random
 import requests
 from flask import Flask, request
 
+reload(sys)
+sys.setdefaultencoding("ISO-8859-1")
+
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
@@ -46,7 +49,7 @@ def webhook():
                         send_message(sender_id, EncryptDES('diamante',text))
                     elif message_text == "Diamante":
                         text = str(message_text)
-                        send = EncryptDES('diamante', text).encode('utf-8').strip()
+                        send = EncryptDES('diamante', text)
                         send_message(sender_id, send)
 
 
