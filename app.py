@@ -37,11 +37,10 @@ def webhook():
                         message = x['message']['text']
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
-                            set_flag(flag_hola, True)
+                            set_flag_hola(True)
                         elif len(message) == 8 and flag_hola == True:
                             bot.send_text_message(recipient_id, 'Menu')
-                            set_flag(False)
-                        elif len(message) != 8 and flag_hola == True:
+                            set_flag_hola(                elif len(message) != 8 and flag_hola == True:
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters')
                         else:
                             pass
@@ -75,9 +74,9 @@ def hello():
                     pass
         return "Success"
 
-def set_flag(flag_to_change,value):
-    global flag_to_change
-    flag_to_change = value
+def set_flag_hola(value):
+    global flag_hola
+    flag_hola = value
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
