@@ -46,15 +46,7 @@ def webhook():
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                             set_flag_hola(True)
                         elif len(message) == 8 and flag_hola == True:
-                            elements = []
-                            element = Button('postback', 'Encrypt','Encrypt')
-                            elements.append(element)
-                            element = Button('postback', 'Decrypt','Decrypt')
-                            #element = Element(title="test", image_url="<arsenal_logo.png>", subtitle="subtitle", item_url="https://pbs.twimg.com/profile_images/803175670595600384/3aGBQn3r_400x400.jpg")
-                            elements.append(element)
-                            logs('Elements: ' + elements.to_json)
-                            bot.send_button_message(recipient_id,"What do you want to do next?...", Button)
-                            #bot.send_text_message(recipient_id, 'Menu')
+                            send_menu(recipient_id, "What do you want to do next?...")
                             set_flag_hola(False)
                         else:
                             pass
@@ -74,28 +66,45 @@ def logs(message):  # simple wrapper for logging to stdout on heroku
     print message
     sys.stdout.flush()
 
-class Element(dict):
-    __acceptable_keys = ['title', 'item_url', 'image_url', 'subtitle', 'buttons']
+def send_menu(recipient_id, message_text):
+    log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
 
-    def __init__(self, *args, **kwargs):
-        if six.PY2:
-            kwargs = {k: v for k, v in kwargs.iteritems() if k in self.__acceptable_keys}
-        else:
-            kwargs = {k: v for k, v in kwargs.items() if k in self.__acceptable_keys}
-        super(Element, self).__init__(*args, **kwargs)
-
-    def to_json(self):
-        return json.dumps({k: v for k, v in self.iteritems() if k in self.__acceptable_keys})
-
-
-class Button:
-    def __init__(self, Btype, title, payload):
-        self.Btype = Btype
-        self.title = title
-        self.payload = payload
-
-    def to_json(self):
-        return json.dumps({Btype,title, payload})
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+        "id": recipient_id
+        },
+        "message":{
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"button",
+                    "text": message_text,
+                    "buttons":[
+                        {
+                            "type":"postback",
+                            "title":"Encrypt",
+                            "payload":"Encrypt"
+                        },
+                        {
+                            "type":"postback",
+                            "title":"Decrypt",
+                            "payload":"Decrypt"
+                        }
+                    ]
+                }
+            }
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 if __name__ == '__main__':
     app.run(debug=True)
