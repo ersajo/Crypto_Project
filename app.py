@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 ACCESS_TOKEN = os.environ["PAGE_ACCESS_TOKEN"]
 VERIFY_TOKEN = os.environ["VERIFY_TOKEN"]
-flag = False
+flag_hola = False
 bot = Bot(ACCESS_TOKEN)
 
 @app.route('/', methods=['GET'])
@@ -36,11 +36,13 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message == 'Hola':
-                            bot.send_text_message(recipient_id, 'Prueba1')
-                            set_flag(True)
-                        elif message == 'Prueba2' and flag == True:
-                            bot.send_text_message(recipient_id, 'Hola')
+                            bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
+                            set_flag(flag_hola, True)
+                        elif len(message) == 8 and flag_hola == True:
+                            bot.send_text_message(recipient_id, 'Menu')
                             set_flag(False)
+                        elif len(message) != 8 and flag_hola == True:
+                            bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters')
                         else:
                             pass
                     else:
@@ -73,9 +75,9 @@ def hello():
                     pass
         return "Success"
 
-def set_flag(value):
-    global flag
-    flag = value
+def set_flag(flag_to_change,value):
+    global flag_to_change
+    flag_to_change = value
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
