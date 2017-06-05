@@ -47,9 +47,9 @@ def webhook():
                             set_flag_hola(True)
                         elif len(message) == 8 and flag_hola == True:
                             elements = []
-                            element = Button(type="postback", title="Encrypt", payload="Encrypt")
+                            element = Button('postback', 'Encrypt','Encrypt')
                             elements.append(element)
-                            element = Button(type="postback", title="Decrypt", payload="Decrypt")
+                            element = Button('postback', 'Decrypt','Decrypt')
                             #element = Element(title="test", image_url="<arsenal_logo.png>", subtitle="subtitle", item_url="https://pbs.twimg.com/profile_images/803175670595600384/3aGBQn3r_400x400.jpg")
                             elements.append(element)
                             bot.send_button_message(recipient_id,"What do you want to do next?...", Button)
@@ -87,11 +87,11 @@ class Element(dict):
         return json.dumps({k: v for k, v in self.iteritems() if k in self.__acceptable_keys})
 
 
-class Button(dict):
-    __acceptable_keys = ['type', 'title', 'payload']
-
-    def to_json(self):
-        return json.dumps({k: v for k, v in self.iteritems() if k in self.__acceptable_keys})
+class Button:
+    def __init__(self, Btype, title, payload):
+        self.Btype = Btype
+        self.title = title
+        self.payload = payload
 
 if __name__ == '__main__':
     app.run(debug=True)
