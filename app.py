@@ -47,43 +47,18 @@ def webhook():
                             set_flag_hola(True)
                         elif len(message) == 8 and flag_hola == True:
                             elements = []
-                            #element = Button(type="postback", title="Encrypt", payload="Encrypt")
-                            #element = Button(type="postback", title="Decrypt", payload="Decrypt")
-                            element = Element(title="test", image_url="<arsenal_logo.png>", subtitle="subtitle", item_url="https://pbs.twimg.com/profile_images/803175670595600384/3aGBQn3r_400x400.jpg")
+                            element = Button(type="postback", title="Encrypt", payload="Encrypt")
                             elements.append(element)
-                            bot.send_generic_message(recipient_id,elements)
+                            element = Button(type="postback", title="Decrypt", payload="Decrypt")
+                            #element = Element(title="test", image_url="<arsenal_logo.png>", subtitle="subtitle", item_url="https://pbs.twimg.com/profile_images/803175670595600384/3aGBQn3r_400x400.jpg")
+                            elements.append(element)
+                            bot.send_button_message(recipient_id,"What do you want to do next?...", Button)
                             #bot.send_text_message(recipient_id, 'Menu')
                             set_flag_hola(False)
                         else:
                             pass
                     else:
                         pass
-        return "Success"
-
-
-@app.route("/", methods=['GET', 'POST'])
-def hello():
-    if request.method == 'GET':
-        if request.args.get("hub.verify_token") == VERIFY_TOKEN:
-            return request.args.get("hub.challenge")
-        else:
-            return 'Invalid verification token'
-
-    if request.method == 'POST':
-        output = request.get_json()
-        for event in output['entry']:
-            messaging = event['messaging']
-            for x in messaging:
-                if x.get('message'):
-                    recipient_id = x['sender']['id']
-                    if x['message'].get('text'):
-                        message = x['message']['text']
-                        bot.send_text_message(recipient_id, message)
-                    if x['message'].get('attachments'):
-                        for att in x['message'].get('attachments'):
-                            bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
-                else:
-                    pass
         return "Success"
 
 def set_flag_hola(value):
