@@ -49,7 +49,8 @@ def webhook():
                         send_message(sender_id, EncryptDES('diamante',text))
                     elif message_text == "Pruebas":
                         text = str(message_text)
-                        send_message(sender_id, EncryptDES('diamante',text))
+                        send = EncryptDES('diamante', text)
+                        send_message(sender_id, send)
 
 
                 if messaging_event.get("delivery"):  # delivery confirmation
