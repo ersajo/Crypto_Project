@@ -44,7 +44,8 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        if message == 'Hola' and flag_hola == False:
+                        if message == 'Hola' and flag_hola == False and flag == True:
+                            set_flag(False)
                             set_flag_hola(True)
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
@@ -53,6 +54,7 @@ def webhook():
                             set_flag_encrypt(False)
                             bot.send_text_message(recipient_id, message)
                         elif message == "clear":
+                            set_flag(False)
                             set_flag_hola(False)
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
@@ -62,6 +64,7 @@ def webhook():
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                         elif len(message) == 8 and flag_hola == True:
                             set_flag_hola(False)
+                            set_flag(True)
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
