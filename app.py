@@ -122,12 +122,11 @@ def EncryptDES(key, text):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/file.txt', 'w') as out_file:
             while True:
-                chunk = in_file.read()
-                if len(chunk) == 0:
+                if len(text) == 0:
                     break
-                elif len(chunk) % 16 != 0:
-                    chunk += ' ' * (16 - len(chunk) % 16)
-                out_file.write(cipher.encrypt(chunk))
+                elif len(text) % 16 != 0:
+                    text += ' ' * (16 - len(text) % 16)
+                out_file.write(cipher.encrypt(text))
 
 
 def send_menu(recipient_id, message_text):
