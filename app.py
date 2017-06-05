@@ -68,7 +68,7 @@ def webhook():
                         pass
                 elif x.get("postback"):
                     recipient_id = x['sender']['id']
-                    postback = messaging_event["postback"]["payload"]
+                    postback = x["postback"]["payload"]
                     if postback == "Encrypt":
                         send_message(sender_id, "Write the text that you want to encrypt...")
                         set_flag_encrypt(True)
