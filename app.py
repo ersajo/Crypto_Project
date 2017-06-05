@@ -31,10 +31,10 @@ def verify():
 def webhook():
     output = request.get_json()
     log(output)
-    logs("flag: " + flag)
-    logs("flag_hola: " + flag_hola)
-    logs("flag_encrypt: " + flag_encrypt)
-    logs("flag_decrypt: " + flag_decrypt)
+    logs("flag: " + str(flag))
+    logs("flag_hola: " + str(flag_hola))
+    logs("flag_encrypt: " + str(flag_encrypt))
+    logs("flag_decrypt: " + str(flag_decrypt))
     if output["object"] == "page":
 
         for event in output["entry"]:
