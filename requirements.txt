@@ -1,5 +1,4 @@
 pytest
-requests
 requests-toolbelt
 six
 pymessenger
