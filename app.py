@@ -10,8 +10,10 @@ app = Flask(__name__)
 
 ACCESS_TOKEN = os.environ["PAGE_ACCESS_TOKEN"]
 VERIFY_TOKEN = os.environ["VERIFY_TOKEN"]
-flag_hola = False
 flag = False
+flag_hola = False
+flag_encrypt = False
+flag_decrypt = False
 bot = Bot(ACCESS_TOKEN)
 
 @app.route('/', methods=['GET'])
@@ -43,8 +45,10 @@ def webhook():
                             set_flag_hola(True)
                         elif message == "clear":
                             bot.send_text_message(recipient_id,'clearing')
-                            set_flag_hola(False)
                             set_flag(False)
+                            set_flag_hola(False)
+                            set_flag_encrypt(False)
+                            set_flag_decrypt(False)
                         elif len(message) != 8 and flag_hola == True:
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                             set_flag_hola(True)
@@ -62,6 +66,16 @@ def webhook():
                             pass
                     else:
                         pass
+                elif x.get("postback"):
+                    recipient_id = x['sender']['id']
+                    postback = messaging_event["postback"]["payload"]
+                    if postback == "Encrypt":
+                        send_message(sender_id, "Write the text that you want to encrypt...")
+                        set_flag_encrypt(True)
+                    elif postback == "Decrypt":
+                        send_message(sender_id,"Kyc")
+                        set_flag_decrypt(True)
+
         return "Success"
 
 def set_flag(value):
@@ -71,6 +85,14 @@ def set_flag(value):
 def set_flag_hola(value):
     global flag_hola
     flag_hola = value
+
+def set_flag_encrypt(value):
+    global flag_encrypt
+    flag_encrypt = value
+
+def set_flag_decrypt(value):
+    global flag_decrypt
+    flag_decrypt = value
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
