@@ -38,18 +38,20 @@ def webhook():
                         if message == 'Hola' and flag_hola == False:
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag_hola(True)
-                            logs(flag_hola)
                         elif message == "clear":
                             bot.send_text_message(recipient_id,'clearing')
                             set_flag_hola(False)
                         elif len(message) != 8 and flag_hola == True:
-                            bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters')
+                            bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                             set_flag_hola(True)
-                            logs(flag_hola)
                         elif len(message) == 8 and flag_hola == True:
-                            bot.send_text_message(recipient_id, 'Menu')
+                            elements = []
+                            element = Button(type="postback", title="Encrypt", payload="Encrypt")
+                            element = Button(type="postback", title="Decrypt", payload="Decrypt")
+                            elements.append(element)
+                            send_button_message(recipient_id, "What do you want to do next?..." ,elements)
+                            #bot.send_text_message(recipient_id, 'Menu')
                             set_flag_hola(False)
-                            logs(flag_hola)
                         else:
                             pass
                     else:
