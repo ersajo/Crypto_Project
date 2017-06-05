@@ -44,7 +44,7 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        if message == 'Hola' and flag_hola == False and flag == True:
+                        if message == 'Hola' and flag_hola == False and flag == False:
                             set_flag(False)
                             set_flag_hola(True)
                             set_flag_encrypt(False)
