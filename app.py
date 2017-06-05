@@ -48,8 +48,10 @@ def webhook():
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
+                        elif message == "Encrypt":
+                            EncryptDES('Diamante', 'Erick', recipient_id)
                         elif len(key) == 8 and message != 'clear':
-                            EncryptDES(key,text)
+                            EncryptDES(key,text,recipient_id)
                             set_text(message)
                             bot.send_text_message(recipient_id, 'message')
                             set_flag_encrypt(False)
