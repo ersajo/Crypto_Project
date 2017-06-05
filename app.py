@@ -50,27 +50,47 @@ def webhook():
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
+                            logs("flag: " + str(flag))
+                            logs("flag_hola: " + str(flag_hola))
+                            logs("flag_encrypt: " + str(flag_encrypt))
+                            logs("flag_decrypt: " + str(flag_decrypt))
                         elif set_flag_encrypt == True:
                             set_flag_encrypt(False)
                             bot.send_text_message(recipient_id, 'message')
+                            logs("flag: " + str(flag))
+                            logs("flag_hola: " + str(flag_hola))
+                            logs("flag_encrypt: " + str(flag_encrypt))
+                            logs("flag_decrypt: " + str(flag_decrypt))
                         elif message == "clear":
                             set_flag(False)
                             set_flag_hola(False)
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
                             bot.send_text_message(recipient_id,'clearing')
+                            logs("flag: " + str(flag))
+                            logs("flag_hola: " + str(flag_hola))
+                            logs("flag_encrypt: " + str(flag_encrypt))
+                            logs("flag_decrypt: " + str(flag_decrypt))
                         elif len(message) != 8 and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
                             set_flag(False)
                             set_flag_hola(True)
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
+                            logs("flag: " + str(flag))
+                            logs("flag_hola: " + str(flag_hola))
+                            logs("flag_encrypt: " + str(flag_encrypt))
+                            logs("flag_decrypt: " + str(flag_decrypt))
                         elif len(message) == 8 and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
                             set_flag(True)
                             set_flag_hola(False)
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
                             send_menu(recipient_id, "What do you want to do next?...")
+                            logs("flag: " + str(flag))
+                            logs("flag_hola: " + str(flag_hola))
+                            logs("flag_encrypt: " + str(flag_encrypt))
+                            logs("flag_decrypt: " + str(flag_decrypt))
                         else:
                             pass
                     else:
@@ -78,18 +98,26 @@ def webhook():
                 elif x.get("postback"):
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
-                    if postback == "Encrypt":
+                    if postback == "Encrypt" and flag == True:
                         set_flag(False)
                         set_flag_hola(False)
                         set_flag_encrypt(True)
                         set_flag_decrypt(False)
                         bot.send_text_message(recipient_id, "Write the text that you want to encrypt...")
-                    elif postback == "Decrypt":
+                        logs("flag: " + str(flag))
+                        logs("flag_hola: " + str(flag_hola))
+                        logs("flag_encrypt: " + str(flag_encrypt))
+                        logs("flag_decrypt: " + str(flag_decrypt))
+                    elif postback == "Decrypt" and flag == True:
                         set_flag(False)
                         set_flag_hola(False)
                         set_flag_encrypt(False)
                         set_flag_decrypt(True)
                         bot.send_text_message(recipient_id, 'Well done')
+                        logs("flag: " + str(flag))
+                        logs("flag_hola: " + str(flag_hola))
+                        logs("flag_encrypt: " + str(flag_encrypt))
+                        logs("flag_decrypt: " + str(flag_decrypt))
 
         return "Success"
 
