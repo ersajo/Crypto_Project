@@ -2,7 +2,7 @@ import os
 import sys
 import json
 from flask import Flask, request
-from pymessenger.bot import Bot
+from pymessenger.bot import Bot, Element
 
 app = Flask(__name__)
 
