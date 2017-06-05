@@ -1,161 +1,38 @@
-import os
-import sys
-import json
-from pymessenger.bot import Bot
-from Crypto.Cipher import DES
-from Crypto import Random
-
-import requests
 from flask import Flask, request
+from pymessenger.bot import Bot
 
 app = Flask(__name__)
 
-bot = Bot(os.environ["PAGE_ACCESS_TOKEN"])
-
-@app.route('/', methods=['GET'])
-def verify():
-    # when the endpoint is registered as a webhook, it must echo back
-    # the 'hub.challenge' value it receives in the query arguments
-    if request.args.get("hub.mode") == "subscribe" and request.args.get("hub.challenge"):
-        if not request.args.get("hub.verify_token") == os.environ["VERIFY_TOKEN"]:
-            return "Verification token mismatch", 403
-        return request.args["hub.challenge"], 200
-
-    return "Hello world", 200
+ACCESS_TOKEN = ""
+VERIFY_TOKEN = ""
+bot = Bot(ACCESS_TOKEN)
 
 
-@app.route('/', methods=['POST'])
-def webhook():
+@app.route("/", methods=['GET', 'POST'])
+def hello():
+    if request.method == 'GET':
+        if request.args.get("hub.verify_token") == VERIFY_TOKEN:
+            return request.args.get("hub.challenge")
+        else:
+            return 'Invalid verification token'
 
-    # endpoint for processing incoming messaging events
-    data = request.get_json()
-    log(data)  # you may not want to log every incoming message in production, but it's good for testing
-    if data["object"] == "page":
-
-        for entry in data["entry"]:
-            for messaging_event in entry["messaging"]:
-
-                if messaging_event.get("message"):  # someone sent us a message
-
-                    sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
-                    recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
-                    message_text = messaging_event["message"]["text"]  # the message's text
-                    if message_text ==  "Hola":
-                        bot.send_text_message(sender_id,"Hi, I'm Crypt2me. Write a 8 byte key...)
-                    elif message_text ==  "Adios":
-                        send_message(sender_id, "Di Adios")
-                    elif message_text == "Pruebas1":
-                        text = str(message_text)
-                        send_message(sender_id, EncryptDES('diamante',text))
-                    elif message_text == "12345678":
-                        text = str(message_text)
-                        send = EncryptDES('diamante', text, sender_id)
-                        #send_message(sender_id, send)
-
-
-                if messaging_event.get("delivery"):  # delivery confirmation
+    if request.method == 'POST':
+        output = request.get_json()
+        for event in output['entry']:
+            messaging = event['messaging']
+            for x in messaging:
+                if x.get('message'):
+                    recipient_id = x['sender']['id']
+                    if x['message'].get('text'):
+                        message = x['message']['text']
+                        bot.send_text_message(recipient_id, message)
+                    if x['message'].get('attachments'):
+                        for att in x['message'].get('attachments'):
+                            bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
+                else:
                     pass
-
-                if messaging_event.get("optin"):  # optin confirmation
-                    pass
-
-                if messaging_event.get("postback"):  # user clicked/tapped "postback" button in earlier message
-
-                    sender_id = messaging_event["sender"]["id"]
-                    respuesta = messaging_event["postback"]["payload"]
-                    if respuesta == "Encrypt":
-                        send_message(sender_id, "Write the text that you want to encrypt...")
-                        flag = True
-                    elif message_text == "Decrypt":
-                        send_message(sender_id,"Kyc")
-    return "ok", 200
-
-def EncryptDES(key, text, recipient_id):
-    logs("text: " + text)
-    cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    with open(out_filename, 'w') as out_file:
-            while True:
-                chunk = in_file.read()
-                if len(chunk) == 0:
-                    break
-                elif len(chunk) % 16 != 0:
-                    chunk += ' ' * (16 - len(chunk) % 16)
-                out_file.write(cipher.encrypt(chunk))
-                send_file(recipient_id, out_file)
-    flag = False
-
-def send_menu(recipient_id, message_text):
-    log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
-
-    params = {
-        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = json.dumps({
-        "recipient": {
-        "id": recipient_id
-        },
-        "message":{
-            "attachment":{
-                "type":"template",
-                "payload":{
-                    "template_type":"button",
-                    "text": message_text,
-                    "buttons":[
-                        {
-                            "type":"postback",
-                            "title":"Encrypt",
-                            "payload":"Encrypt"
-                        },
-                        {
-                            "type":"postback",
-                            "title":"Decrypt",
-                            "payload":"Decrypt"
-                        }
-                    ]
-                }
-            }
-        }
-    })
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        log(r.status_code)
-        log(r.text)
-
-def send_message(recipient_id, message_text):
-
-    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
-
-    params = {
-        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = json.dumps({
-        "recipient": {
-            "id": recipient_id
-        },
-        "message": {
-            "text": message_text
-        }
-    })
-    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    if r.status_code != 200:
-        log(r.status_code)
-        log(r.text)
+        return "Success"
 
 
-def log(message):  # simple wrapper for logging to stdout on heroku
-    print str(message)
-    sys.stdout.flush()
-
-def logs(message):  # simple wrapper for logging to stdout on heroku
-    print message
-    sys.stdout.flush()
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(port=5002, debug=True)
