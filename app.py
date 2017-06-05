@@ -31,6 +31,10 @@ def verify():
 def webhook():
     output = request.get_json()
     log(output)
+    logs("flag: " + flag)
+    logs("flag_hola: " + flag_hola)
+    logs("flag_encrypt: " + flag_encrypt)
+    logs("flag_decrypt: " + flag_decrypt)
     if output["object"] == "page":
 
         for event in output["entry"]:
@@ -56,6 +60,9 @@ def webhook():
                             send_menu(recipient_id, "What do you want to do next?...")
                             set_flag_hola(False)
                             set_flag(True)
+                        elif set_flag_encrypt == True:
+                            bot.send_text_message(recipient_id, message)
+                            set_flag_encrypt(False)
                         else:
                             pass
                     else:
