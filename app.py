@@ -11,6 +11,7 @@ app = Flask(__name__)
 ACCESS_TOKEN = os.environ["PAGE_ACCESS_TOKEN"]
 VERIFY_TOKEN = os.environ["VERIFY_TOKEN"]
 flag_hola = False
+flag = False
 bot = Bot(ACCESS_TOKEN)
 
 @app.route('/', methods=['GET'])
@@ -43,17 +44,29 @@ def webhook():
                         elif message == "clear":
                             bot.send_text_message(recipient_id,'clearing')
                             set_flag_hola(False)
+                            set_flag(False)
                         elif len(message) != 8 and flag_hola == True:
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                             set_flag_hola(True)
                         elif len(message) == 8 and flag_hola == True:
                             send_menu(recipient_id, "What do you want to do next?...")
                             set_flag_hola(False)
+                            set_flag(True)
+                        if message == "Encrypt" and flag == True:
+                            bot.send_text_message(recipient_id, 'Do it...')
+                            set_flag(False)
+                        elif message == "Decrypt" and flag == False:
+                            bot.send_text_message(recipient_id, 'Well done')
+                            set_flag(False)
                         else:
                             pass
                     else:
                         pass
         return "Success"
+
+def set_flag(value):
+    global flag
+    flag = value
 
 def set_flag_hola(value):
     global flag_hola
