@@ -40,9 +40,10 @@ def webhook():
                             set_flag_hola(True)
                         elif len(message) == 8 and flag_hola == True:
                             bot.send_text_message(recipient_id, 'Menu')
-                            set_flag_hola(False)                
+                            set_flag_hola(False)
                         elif len(message) != 8 and flag_hola == True:
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters')
+                            set_flag_hola(True)
                         else:
                             pass
                     else:
