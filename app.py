@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import six
 from flask import Flask, request
 from pymessenger.bot import Bot
 
