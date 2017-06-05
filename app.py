@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 ACCESS_TOKEN = os.environ["PAGE_ACCESS_TOKEN"]
 VERIFY_TOKEN = os.environ["VERIFY_TOKEN"]
-global flag = False
+flag = False
 bot = Bot(ACCESS_TOKEN)
 
 @app.route('/', methods=['GET'])
@@ -37,7 +37,7 @@ def webhook():
                         message = x['message']['text']
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, 'Prueba1')
-                            flag = True
+                            set_flag(True)
                         elif message == 'Prueba2' and flag == True:
                             bot.send_text_message(recipient_id, 'Hola')
                         else:
@@ -71,6 +71,10 @@ def hello():
                 else:
                     pass
         return "Success"
+
+def set_flag(value):
+    global flag
+    flag = value
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
