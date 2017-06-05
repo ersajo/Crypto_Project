@@ -39,7 +39,7 @@ def webhook():
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag_hola(True)
                             logs(flag_hola)
-                        while(flag_hola == True):
+                        while(flag_hola == Trueq    w):
                             if len(message) == 8:
                                 bot.send_text_message(recipient_id, 'Menu')
                                 set_flag_hola(False)
