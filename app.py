@@ -23,10 +23,10 @@ def EncryptDES(key, text):
     message_text = " "
     return ciphertext
 
-flag = False
-key = " "
-text = " "
-message_text = " "
+#flag = False
+#key = " "
+#text = " "
+#message_text = " "
 
 @app.route('/', methods=['GET'])
 def verify():
