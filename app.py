@@ -10,6 +10,8 @@ app = Flask(__name__)
 
 ACCESS_TOKEN = os.environ["PAGE_ACCESS_TOKEN"]
 VERIFY_TOKEN = os.environ["VERIFY_TOKEN"]
+key = ''
+text = ''
 flag = False
 flag_llave = False
 flag_hola = False
@@ -44,7 +46,7 @@ def webhook():
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
-                        elif flag_encrypt == True:
+                        elif len(key) == 8 and flag_encrypt == True:
                             set_flag_encrypt(False)
                             bot.send_text_message(recipient_id, 'message')
                         elif message == "clear":
@@ -56,6 +58,7 @@ def webhook():
                         elif len(message) != 8 and flag == True:
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                         elif len(message) == 8 and flag == True:
+                            set_key(message)
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
@@ -73,6 +76,14 @@ def webhook():
                         set_flag_decrypt(True)
                         bot.send_text_message(recipient_id, 'Well done')
         return "Success"
+
+def set_key(value):
+    global key
+    key = value
+
+def set_text(value):
+    global text
+    text = value
 
 def set_flag(value):
     global flag
