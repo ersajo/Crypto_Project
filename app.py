@@ -73,15 +73,14 @@ def webhook():
 def EncryptDES(key, text):
     logs("text: " + text)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    """while True:
+    while True:
         if len(text) == 0:
             break
         elif len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
         ciphertext = cipher.encrypt(text)
     flag = False
-    return ciphertext"""
-    return text
+    return ciphertext
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
