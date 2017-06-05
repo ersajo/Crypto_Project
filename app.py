@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 ACCESS_TOKEN = os.environ["PAGE_ACCESS_TOKEN"]
 VERIFY_TOKEN = os.environ["VERIFY_TOKEN"]
-flag = False
+global flag = False
 bot = Bot(ACCESS_TOKEN)
 
 @app.route('/', methods=['GET'])
@@ -40,6 +40,8 @@ def webhook():
                             flag = True
                         elif message == 'Prueba2' and flag == True:
                             bot.send_text_message(recipient_id, 'Hola')
+                        else:
+                            pass
                     else:
                         pass
         return "Success"
