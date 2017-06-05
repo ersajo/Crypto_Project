@@ -45,24 +45,24 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message == 'Hola' and flag_hola == False:
+                            set_flag_hola(True)
+                            set_flag_encrypt(False)
+                            set_flag_decrypt(False)
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
-                            set_flag_hola(True)
-                            set_flag_encrypt(False)
-                            set_flag_decrypt(False)
                         elif set_flag_encrypt == True:
-                            bot.send_text_message(recipient_id, message)
                             set_flag_encrypt(False)
+                            bot.send_text_message(recipient_id, message)
                         elif message == "clear":
-                            bot.send_text_message(recipient_id,'clearing')
                             set_flag_hola(False)
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
+                            bot.send_text_message(recipient_id,'clearing')
                         elif len(message) != 8 and flag_hola == True:
-                            bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                             set_flag_hola(True)
+                            bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                         elif len(message) == 8 and flag_hola == True:
-                            send_menu(recipient_id, "What do you want to do next?...")
                             set_flag_hola(False)
+                            send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
                     else:
@@ -71,13 +71,13 @@ def webhook():
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
                     if postback == "Encrypt":
-                        bot.send_text_message(recipient_id, "Write the text that you want to encrypt...")
                         set_flag_encrypt(True)
                         set_flag(False)
+                        bot.send_text_message(recipient_id, "Write the text that you want to encrypt...")
                     elif postback == "Decrypt":
-                        bot.send_text_message(recipient_id, 'Well done')
                         set_flag_decrypt(True)
                         set_flag(False)
+                        bot.send_text_message(recipient_id, 'Well done')
 
         return "Success"
 
