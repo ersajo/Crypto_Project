@@ -48,6 +48,7 @@ def webhook():
                             set_flag(True)
                         elif len(key) == 8 and flag_encrypt == True:
                             bot.send_text_message(recipient_id, 'message')
+                            set_flag_encrypt(False)
                         elif message == "clear":
                             set_flag_llave(False)
                             set_flag_hola(False)
