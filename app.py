@@ -44,10 +44,10 @@ def webhook():
                         send_menu(sender_id, "What do you want to do next?")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
-                    elif message_text == "prueba1":
+                    elif message_text == "Pruebas1":
                         text = str(message_text)
                         send_message(sender_id, EncryptDES('diamante',text))
-                    elif message_text == "prueba2":
+                    elif message_text == "Prueba":
                         text = str(message_text)
                         send_message(sender_id, EncryptDES('diamante',text))
 
