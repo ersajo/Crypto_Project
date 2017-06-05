@@ -55,7 +55,7 @@ def webhook():
                             bot.send_text_message(recipient_id,'clearing')
                         elif len(message) != 8 and flag == True:
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
-                        elif len(message) == 8 and flag == Trues:
+                        elif len(message) == 8 and flag == True:
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
