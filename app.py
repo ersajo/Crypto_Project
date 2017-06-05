@@ -60,12 +60,12 @@ def webhook():
                     if message_text ==  "Hola":
                         send_message(sender_id, "Hi, I'm Crypt2me. Write a 8 byte key...")
                     elif len(message_text) == 8:
-                        key = message_text
+                        key = str(message_text)
                         send_menu(sender_id, "What do you want to do next?")
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
                     elif message_text == "prueba1":
-                        text = message_text
+                        text = str(message_text)
                         send_message(sender_id, EncryptDES(key,text))
 
 
