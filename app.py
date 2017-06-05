@@ -47,7 +47,7 @@ def webhook():
                     elif message_text == "Pruebas1":
                         text = str(message_text)
                         send_message(sender_id, EncryptDES('diamante',text))
-                    elif message_text == "Pruebas":
+                    elif message_text == "Diamante":
                         text = str(message_text)
                         send = EncryptDES('diamante', text)
                         send_message(sender_id, send)
@@ -73,12 +73,7 @@ def webhook():
 def EncryptDES(key, text):
     logs("text: " + text)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    while True:
-        if len(text) == 0:
-            break
-        elif len(text) % 16 != 0:
-            text += ' ' * (16 - len(text) % 16)
-        ciphertext = cipher.encrypt(text)
+    ciphertext = cipher.encrypt(text)
     flag = False
     return ciphertext
 
