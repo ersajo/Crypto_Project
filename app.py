@@ -51,7 +51,7 @@ def webhook():
                             #element = Button(type="postback", title="Decrypt", payload="Decrypt")
                             element = Element(title="test", image_url="<arsenal_logo.png>", subtitle="subtitle", item_url="https://pbs.twimg.com/profile_images/803175670595600384/3aGBQn3r_400x400.jpg")
                             elements.append(element)
-                            bot.send_generic_message(recipient_id, "What do you want to do next?..." ,elements)
+                            bot.send_generic_message(recipient_id,elements)
                             #bot.send_text_message(recipient_id, 'Menu')
                             set_flag_hola(False)
                         else:
