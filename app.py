@@ -2,7 +2,7 @@ import os
 import sys
 import json
 from flask import Flask, request
-from pymessenger.bot import Bot, Element
+from pymessenger.bot import Bot
 
 app = Flask(__name__)
 
@@ -96,6 +96,24 @@ def log(message):  # simple wrapper for logging to stdout on heroku
 def logs(message):  # simple wrapper for logging to stdout on heroku
     print message
     sys.stdout.flush()
+
+class Element(dict):
+    __acceptable_keys = ['title', 'item_url', 'image_url', 'subtitle', 'buttons']
+
+    def __init__(self, *args, **kwargs):
+        if six.PY2:
+            kwargs = {k: v for k, v in kwargs.iteritems() if k in self.__acceptable_keys}
+        else:
+            kwargs = {k: v for k, v in kwargs.items() if k in self.__acceptable_keys}
+        super(Element, self).__init__(*args, **kwargs)
+
+    def to_json(self):
+        return json.dumps({k: v for k, v in self.iteritems() if k in self.__acceptable_keys})
+
+
+class Button(dict):
+    # TODO: Decide if this should do more
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)
