@@ -46,8 +46,9 @@ def webhook():
                             set_flag_hola(True)
                         elif len(message) == 8 and flag_hola == True:
                             elements = []
-                            element = Button(type="postback", title="Encrypt", payload="Encrypt")
-                            element = Button(type="postback", title="Decrypt", payload="Decrypt")
+                            #element = Button(type="postback", title="Encrypt", payload="Encrypt")
+                            #element = Button(type="postback", title="Decrypt", payload="Decrypt")
+                            element = Element(title="test", image_url="<arsenal_logo.png>", subtitle="subtitle", item_url="https://pbs.twimg.com/profile_images/803175670595600384/3aGBQn3r_400x400.jpg")
                             elements.append(element)
                             send_button_message(recipient_id, "What do you want to do next?..." ,elements)
                             #bot.send_text_message(recipient_id, 'Menu')
