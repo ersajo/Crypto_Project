@@ -38,7 +38,7 @@ def webhook():
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, 'Prueba1')
                             flag = True
-                        elif message == 'Prueba1' and flag == True:
+                        elif message == 'Prueba2' and flag == True:
                             bot.send_text_message(recipient_id, 'Hola')
                     else:
                         pass
