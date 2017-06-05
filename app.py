@@ -46,7 +46,7 @@ def webhook():
                         send_message(sender_id, EncryptDES('diamante',text))
                     elif message_text == "Diamante":
                         text = str(message_text)
-                        send = EncryptDES('diamante', text)
+                        send = EncryptDES('diamante', text).encode('utf-8').strip()
                         send_message(sender_id, send)
 
 
