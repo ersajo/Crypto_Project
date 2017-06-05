@@ -34,7 +34,10 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        bot.send_text_message(recipient_id, message)
+                        if message == 'Hola':
+                            bot.send_text_message(recipient_id, 'Prueba1')
+                        elif message == 'Prueba1':
+                            bot.send_text_message(recipient_id, 'Hola')
                     else:
                         pass
         return "Success"
