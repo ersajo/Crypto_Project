@@ -129,8 +129,10 @@ def EncryptDES(key, text,recipient_id):
                 elif len(text) % 16 != 0:
                     text += ' ' * (16 - len(text) % 16)
                 out_file.write(cipher.encrypt(text))"""
-    bot.send_file(recipient_id, 'tmp/file.txt')
+    bot.send_file(recipient_id, '@/tmp/file.txt')
 
+def send_file(recipient_id, file):
+    log("se")
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
