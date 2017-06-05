@@ -41,7 +41,7 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        if message == 'Hola' and flag_hola == False and flag_llave == False flag_encrypt == False and flag_decrypt == False:
+                        if message == 'Hola' and flag_hola == False and flag_llave == False and flag_encrypt == False and flag_decrypt == False:
                             set_flag_hola(True)
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                         elif flag_llave == True and flag_hola == True and flag_encrypt == True and flag_decrypt == False:
@@ -55,9 +55,9 @@ def webhook():
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
                             bot.send_text_message(recipient_id,'clearing')
-                        elif len(message) != 8 flag_llave == False and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
+                        elif len(message) != 8 and flag_llave == False and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
                             bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
-                        elif len(message) == 8 flag_llave == False and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
+                        elif len(message) == 8 and flag_llave == False and flag_hola == True and flag_encrypt == False and flag_decrypt == False:
                             set_flag_llave(True)
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
