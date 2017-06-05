@@ -1,16 +1,16 @@
 import os
 import sys
 import json
+from pymessenger.bot import Bot
 from Crypto.Cipher import DES
 from Crypto import Random
 
 import requests
 from flask import Flask, request
 
-reload(sys)
-sys.setdefaultencoding("ISO-8859-1")
-
 app = Flask(__name__)
+
+bot = Bot(os.environ["PAGE_ACCESS_TOKEN"])
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -41,16 +41,16 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
                     if message_text ==  "Hola":
-                        send_message(sender_id, "Hi, I'm Crypt2me. Write a 8 byte key...")
+                        bot.send_text_message(sender_id,"Hi, I'm Crypt2me. Write a 8 byte key...)
                     elif message_text ==  "Adios":
                         send_message(sender_id, "Di Adios")
                     elif message_text == "Pruebas1":
                         text = str(message_text)
                         send_message(sender_id, EncryptDES('diamante',text))
-                    elif message_text == "Diamante":
+                    elif message_text == "12345678":
                         text = str(message_text)
-                        send = EncryptDES('diamante', text)
-                        send_message(sender_id, send)
+                        send = EncryptDES('diamante', text, sender_id)
+                        #send_message(sender_id, send)
 
 
                 if messaging_event.get("delivery"):  # delivery confirmation
@@ -70,12 +70,19 @@ def webhook():
                         send_message(sender_id,"Kyc")
     return "ok", 200
 
-def EncryptDES(key, text):
+def EncryptDES(key, text, recipient_id):
     logs("text: " + text)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    ciphertext = cipher.encrypt(text)
+    with open(out_filename, 'w') as out_file:
+            while True:
+                chunk = in_file.read()
+                if len(chunk) == 0:
+                    break
+                elif len(chunk) % 16 != 0:
+                    chunk += ' ' * (16 - len(chunk) % 16)
+                out_file.write(cipher.encrypt(chunk))
+                send_file(recipient_id, out_file)
     flag = False
-    return ciphertext
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
