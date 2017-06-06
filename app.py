@@ -36,7 +36,7 @@ def verify():
 def webhook():
     output = request.get_json()
     log(output)
-    logs("Directorio: " + os.getchwd())
+    logs("Directorio: " + os.path.dirname(os.path.abspath(__file__)))
     if output["object"] == "page":
 
         for event in output["entry"]:
