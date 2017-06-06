@@ -78,11 +78,6 @@ def uploaded_file(filename):
 def webhook():
     output = request.get_json()
     log(output)
-    #upload_file()
-    archivo = open('tmp/file.txt', 'r')
-    contenido = archivo.read()
-    logs("Texto archivo: " + contenido)
-    archivo.close()
     if output["object"] == "page":
 
         for event in output["entry"]:
@@ -98,7 +93,7 @@ def webhook():
                         elif message == "prueba":
                             send_file(recipient_id,'file.txt')
                         elif len(key) == 8 and message != 'clear':
-                            EncryptDES(key,text,recipient_id)
+                            EncryptDES(key, text, recipient_id)
                             set_text(message)
                             bot.send_text_message(recipient_id, 'message')
                             set_flag_encrypt(False)
@@ -167,16 +162,20 @@ def logs(message):  # simple wrapper for logging to stdout on heroku
     sys.stdout.flush()
 
 def EncryptDES(key, text,recipient_id):
+    archivo = open('tmp/file.txt', 'w')
+    contenido = archivo.read()
+
     logs("text: " + text)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    with open(os.path.dirname(os.path.abspath(__file__)) + '/tmp/file.txt', 'w') as out_file:
-            while True:
-                if len(text) == 0:
-                    break
-                elif len(text) % 16 != 0:
-                    text += ' ' * (16 - len(text) % 16)
-                out_file.write(cipher.encrypt(text))
-    bot.send_file(recipient_id, os.path.dirname(os.path.abspath(__file__)) + '/tmp/file.txt')
+    while True:
+        if len(text) == 0:
+            break
+        elif len(text) % 16 != 0:
+            text += ' ' * (16 - len(text) % 16)
+        out_file.write(cipher.encrypt(text))
+
+    send_file(recipient_id,'file.txt')
+    archivo.close()
 
 def send_file(recipient_id, files):
     log("sending file to {recipient} {files}".format(recipient=recipient_id, files=files))
