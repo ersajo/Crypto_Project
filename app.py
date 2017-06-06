@@ -32,9 +32,11 @@ def verify():
 
     return "Hello world", 200
 
-@app.route('/tmp/')
-def upload(file_upload):
-    return app.send_static_file('tmp/file.txt')
+@app.route('/tmp', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['/tmp/file.txt']
+        f.save('/var/www/tmp/file.txt')
 
 @app.route('/', methods=['POST'])
 def webhook():
