@@ -34,7 +34,7 @@ def verify():
 
 @app.route('/tmp/')
 def upload(file_upload):
-    return app.send_static_file(file_upload)
+    return app.send_static_file('tmp/file.txt')
 
 @app.route('/', methods=['POST'])
 def webhook():
