@@ -25,6 +25,10 @@ flag_encrypt = False
 flag_decrypt = False
 bot = Bot(ACCESS_TOKEN)
 
+def allowed_file(filename):
+    return '.' in filename and \
+    filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
@@ -34,14 +38,6 @@ def verify():
             return "Verification token mismatch", 403
         return request.args["hub.challenge"], 200
 
-    return "Hello world", 200
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.',1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route('/', methods=['GET', 'POST'])
-def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -63,6 +59,12 @@ def upload_file():
          <input type=submit value=Upload>
     </form>
     '''
+    return "Hello world", 200
+
+
+#@app.route('/', methods=['GET', 'POST'])
+#def upload_file():
+
 
 @app.route('/', methods=['POST'])
 def webhook():
