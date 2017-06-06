@@ -5,7 +5,7 @@ import six
 import requests
 from Crypto.Cipher import DES
 from Crypto import Random
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from pymessenger.bot import Bot
 
