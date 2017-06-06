@@ -96,7 +96,7 @@ def webhook():
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
                         elif message == "Proof":
-                            bot.send_file(recipient_id, 'tmp/file.txt')
+                            bot.send_file(recipient_id, 'https://afternoon-mountain-34766.herokuapp.com/tmp/file.txt')
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key,text,recipient_id)
                             set_text(message)
