@@ -35,8 +35,8 @@ def verify():
 @app.route('/tmp', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        f = request.files['/tmp/file.txt']
-        f.save('/var/www/tmp/file.txt')
+        f = request.files['file']
+        f.save('tmp/file.txt')
 
 @app.route('/', methods=['POST'])
 def webhook():
