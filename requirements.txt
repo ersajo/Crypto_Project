@@ -1,3 +1,4 @@
+fbmq
 pytest
 requests-toolbelt
 six
