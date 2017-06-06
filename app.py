@@ -161,18 +161,17 @@ def logs(message):  # simple wrapper for logging to stdout on heroku
     print message
     sys.stdout.flush()
 
-def EncryptDES(key, text,recipient_id):
-    archivo = open('tmp/file.txt', 'w')
-    logs("text: " + text)
+def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    while True:
-        if len(text) == 0:
-            break
-        elif len(text) % 16 != 0:
-            text += ' ' * (16 - len(text) % 16)
-        archivo.write(cipher.encrypt(text))
-    archivo.close()
-
+    logs("text: " + text)
+    with open(out_filename, 'w') as out_file:
+        while True:
+            chunk = text
+            if len(chunk) == 0:
+                break
+            elif len(chunk) % 16 != 0:
+                chunk += ' ' * (16 - len(chunk) % 16)
+            out_file.write(cipher.encrypt(chunk))
     send_file(recipient_id,'file.txt')
 
 def send_file(recipient_id, files):
