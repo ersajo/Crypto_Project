@@ -7,7 +7,6 @@ from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request
 from pymessenger.bot import Bot
-#from fbmq import Page
 
 app = Flask(__name__)
 
@@ -21,7 +20,6 @@ flag_hola = False
 flag_encrypt = False
 flag_decrypt = False
 bot = Bot(ACCESS_TOKEN)
-#page = fbmq.Page(ACCESS_TOKEN)
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -33,6 +31,10 @@ def verify():
         return request.args["hub.challenge"], 200
 
     return "Hello world", 200
+
+@app.route('/tmp/')
+def upload(file_upload):
+    return app.send_static_file(file_upload)
 
 @app.route('/', methods=['POST'])
 def webhook():
