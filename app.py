@@ -66,7 +66,7 @@ def verify():
 #def upload_file():
 
 
-@app.route('/', methods=['POST'])
+"""@app.route('/', methods=['POST'])
 def webhook():
     output = request.get_json()
     log(output)
@@ -121,6 +121,7 @@ def webhook():
                         set_flag_decrypt(True)
                         bot.send_text_message(recipient_id, 'Well done')
         return "Success"
+"""
 
 def set_key(value):
     global key
