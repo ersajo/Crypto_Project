@@ -91,7 +91,7 @@ def webhook():
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
                         elif message == "prueba":
-                            send_file(recipient_id,'file.txt')
+                            EncryptDES('12345678', 'Hola', recipient_id)
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key, text, recipient_id)
                             set_text(message)
@@ -172,10 +172,10 @@ def EncryptDES(key, text,recipient_id):
             break
         elif len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
-        out_file.write(cipher.encrypt(text))
+        archivo.write(cipher.encrypt(text))
+    archivo.close()
 
     send_file(recipient_id,'file.txt')
-    archivo.close()
 
 def send_file(recipient_id, files):
     log("sending file to {recipient} {files}".format(recipient=recipient_id, files=files))
