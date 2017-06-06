@@ -6,6 +6,7 @@ import requests
 from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request, redirect, url_for
+from werkzeug.utils import secure_filename
 from pymessenger.bot import Bot
 
 UPLOAD_FOLDER = '/tmp'
