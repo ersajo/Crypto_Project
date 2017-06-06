@@ -20,7 +20,6 @@ flag_hola = False
 flag_encrypt = False
 flag_decrypt = False
 bot = Bot(ACCESS_TOKEN)
-dir_path = os.getcwd()
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -37,7 +36,6 @@ def verify():
 def webhook():
     output = request.get_json()
     log(output)
-    logs("Directorio: " + dir_path)
     archivo = open('tmp/file.txt', 'r')
     contenido = archivo.read()
     logs("Texto archivo: " + contenido)
@@ -55,7 +53,7 @@ def webhook():
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
                         elif message == "Pruebas":
-                            bot.send_file(recipient_id, dir_path + '/tmp/file.txt')
+                            bot.send_file(recipient_id, 'tmp/file.txt')
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key,text,recipient_id)
                             set_text(message)
