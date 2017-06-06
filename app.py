@@ -7,6 +7,7 @@ from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request
 from pymessenger.bot import Bot
+from fbmq import Page
 
 app = Flask(__name__)
 
@@ -20,6 +21,7 @@ flag_hola = False
 flag_encrypt = False
 flag_decrypt = False
 bot = Bot(ACCESS_TOKEN)
+page = fbmq.Page(ACCESS_TOKEN)
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -52,8 +54,9 @@ def webhook():
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
-                        elif message == "Pruebas":
-                            bot.send_file(recipient_id, 'tmp/file.txt')
+                        elif message == "Pruebita":
+                            page.send(recipient_id, Attachment.File('tmp/file.txt'))
+                            """bot.send_file(recipient_id, 'tmp/file.txt')"""
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key,text,recipient_id)
                             set_text(message)
