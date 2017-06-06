@@ -9,7 +9,7 @@ from flask import Flask, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from pymessenger.bot import Bot
 
-UPLOAD_FOLDER = '/tmp'
+UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
 app = Flask(__name__)
@@ -58,7 +58,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('tmp/file.txt',
+            return redirect(url_for('uploaded_file',
                                     filename=filename))
     return '''
     <!doctype html>
