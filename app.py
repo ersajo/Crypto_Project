@@ -38,6 +38,8 @@ def webhook():
     output = request.get_json()
     log(output)
     logs("Directorio: " + dir_path)
+    with open(os.path.dirname(dir_path + '/tmp/file.txt', 'w') as archivo:
+        logs("Texto archivo: " + archivo.read())
     if output["object"] == "page":
 
         for event in output["entry"]:
@@ -50,7 +52,7 @@ def webhook():
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
-                        elif message == "Prueba":
+                        elif message == "Pruebas":
                             bot.send_file(recipient_id, dir_path + '/tmp/file.txt')
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key,text,recipient_id)
