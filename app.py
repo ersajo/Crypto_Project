@@ -38,6 +38,11 @@ def verify():
             return "Verification token mismatch", 403
         return request.args["hub.challenge"], 200
 
+    return "Hello world", 200
+
+
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -59,18 +64,12 @@ def verify():
          <input type=submit value=Upload>
     </form>
     '''
-    return "Hello world", 200
 
-
-#@app.route('/', methods=['GET', 'POST'])
-#def upload_file():
-
-
-"""@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST'])
 def webhook():
     output = request.get_json()
     log(output)
-    #upload_file('file.txt')
+    upload_file('tmp/file.txt')
     archivo = open('tmp/file.txt', 'r')
     contenido = archivo.read()
     logs("Texto archivo: " + contenido)
@@ -121,7 +120,6 @@ def webhook():
                         set_flag_decrypt(True)
                         bot.send_text_message(recipient_id, 'Well done')
         return "Success"
-"""
 
 def set_key(value):
     global key
