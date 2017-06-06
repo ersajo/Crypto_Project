@@ -95,8 +95,8 @@ def webhook():
                         if message == 'Hola':
                             bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
-                        elif message == "Proof":
-                            bot.send_file(recipient_id, 'https://afternoon-mountain-34766.herokuapp.com/tmp/file.txt')
+                        elif message == "prueba":
+                            send_file(recipient_id,'file.txt')
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key,text,recipient_id)
                             set_text(message)
@@ -178,8 +178,32 @@ def EncryptDES(key, text,recipient_id):
                 out_file.write(cipher.encrypt(text))
     bot.send_file(recipient_id, os.path.dirname(os.path.abspath(__file__)) + '/tmp/file.txt')
 
-def send_file(recipient_id, file):
-    log("se")
+def send_file(recipient_id, files):
+    log("sending file to {recipient} {files}".format(recipient=recipient_id, files=files))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient":{
+        "id": recipient_id
+        },
+        "message":{
+            "attachment":{
+                "type":"file",
+                "payload":{
+                    "url":"https://afternoon-mountain-34766.herokuapp.com/tmp/" + files
+                }
+            }
+        }
+    })
+    r = requests.posts("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
