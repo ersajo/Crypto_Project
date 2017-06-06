@@ -6,7 +6,7 @@ import requests
 from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request
-#from pymessenger.bot import Bot
+from pymessenger.bot import Bot
 #from fbmq import Page
 
 app = Flask(__name__)
