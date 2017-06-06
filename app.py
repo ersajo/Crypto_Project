@@ -38,9 +38,10 @@ def webhook():
     output = request.get_json()
     log(output)
     logs("Directorio: " + dir_path)
-    """archivo = open(os.path.dirname(dir_path + '/tmp/file.txt', 'r')
+    archivo = open('tmp/file.txt', 'r')
     contenido = archivo.read()
-    logs("Texto archivo: " + contenido)"""
+    logs("Texto archivo: " + contenido)
+    archivo.close()
     if output["object"] == "page":
 
         for event in output["entry"]:
