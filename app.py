@@ -41,7 +41,7 @@ def verify():
     return "Hello world", 200
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/tmp', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
