@@ -70,11 +70,15 @@ def upload_file():
     </form>
     '''
 
+@app.route('/tmp/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
+
 @app.route('/', methods=['POST'])
 def webhook():
     output = request.get_json()
     log(output)
-    upload_file('tmp/file.txt')
+    #upload_file()
     archivo = open('tmp/file.txt', 'r')
     contenido = archivo.read()
     logs("Texto archivo: " + contenido)
