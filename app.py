@@ -70,7 +70,7 @@ def verify():
 def webhook():
     output = request.get_json()
     log(output)
-    upload_file('tmp/file.txt')
+    upload_file('file.txt')
     archivo = open('tmp/file.txt', 'r')
     contenido = archivo.read()
     logs("Texto archivo: " + contenido)
