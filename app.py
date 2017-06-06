@@ -7,7 +7,7 @@ from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request
 from pymessenger.bot import Bot
-from fbmq import Page
+from fbmq import Page, Attachment, Template
 
 app = Flask(__name__)
 
