@@ -20,7 +20,7 @@ flag_hola = False
 flag_encrypt = False
 flag_decrypt = False
 bot = Bot(ACCESS_TOKEN)
-dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = os.getcwd()
 
 @app.route('/', methods=['GET'])
 def verify():
