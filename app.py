@@ -163,8 +163,6 @@ def logs(message):  # simple wrapper for logging to stdout on heroku
 
 def EncryptDES(key, text,recipient_id):
     archivo = open('tmp/file.txt', 'w')
-    contenido = archivo.read()
-
     logs("text: " + text)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     while True:
