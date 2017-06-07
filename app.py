@@ -124,7 +124,7 @@ def webhook():
 
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    with open('tmp/file.txt', 'w') as out_file:
+    with open('tmp/este.txt', 'w') as out_file:
         while True:
             logs("text: " + str(len(text) % 16))
             time.sleep(3)
@@ -133,7 +133,7 @@ def EncryptDES(key, text, recipient_id):
             elif len(text) % 16 != 0:
                 text += ' ' * (16 - len(text) % 16)
             out_file.write(cipher.encrypt(text))
-    send_file(recipient_id,'file.txt')
+    send_file(recipient_id,'este.txt')
 
 def send_text_message(recipient_id, message_text):
 
