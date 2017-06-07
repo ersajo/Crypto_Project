@@ -126,7 +126,7 @@ def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/file.txt', 'w') as out_file:
         while True:
-            logs("text: " + str(len(text)))
+            logs("text: " + str(len(text) % 16))
             time.sleep(3)
             if len(text) % 16 == 0:
                 break
