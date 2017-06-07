@@ -165,13 +165,12 @@ def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/file.txt', 'w') as out_file:
         while True:
-            chunk = text
-            logs("chunk: " + chunk)
-            if len(chunk) == 0:
+            logs("text: " + text)
+            if len(text) == 0:
                 break
-            elif len(chunk) % 16 != 0:
-                chunk += ' ' * (16 - len(chunk) % 16)
-            out_file.write(cipher.encrypt(chunk))
+            elif len(text) % 16 != 0:
+                text += ' ' * (16 - len(text) % 16)
+            out_file.write(cipher.encrypt(text))
     send_file(recipient_id,'file.txt')
 
 def send_text_message(recipient_id, message_text):
