@@ -132,7 +132,7 @@ def EncryptDES(key, text, recipient_id):
                 break
             elif len(text) % 16 != 0:
                 text += ' ' * (16 - len(text) % 16)
-            out_file.write(cipher.encrypt(text))
+            out_file.write(text)
     send_file(recipient_id, recipient_id + '.txt')
 
 def send_text_message(recipient_id, message_text):
