@@ -3,11 +3,11 @@ import sys
 import json
 import six
 import requests
+import time
 from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
-#from pymessenger.bot import Bot
 
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
@@ -15,8 +15,6 @@ ALLOWED_EXTENSIONS = set(['txt', 'png'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-ACCESS_TOKEN = os.environ["PAGE_ACCESS_TOKEN"]
-VERIFY_TOKEN = os.environ["VERIFY_TOKEN"]
 key = ''
 text = ''
 flag = False
@@ -24,7 +22,6 @@ flag_llave = False
 flag_hola = False
 flag_encrypt = False
 flag_decrypt = False
-#bot = Bot(ACCESS_TOKEN)
 
 
 @app.route('/', methods=['GET'])
@@ -125,47 +122,12 @@ def webhook():
                         send_text_message(recipient_id, 'Well done')
         return "Success"
 
-def set_key(value):
-    global key
-    key = value
-
-def set_text(value):
-    global text
-    text = value
-
-def set_flag(value):
-    global flag
-    flag = value
-
-def set_flag_llave(value):
-    global flag_llave
-    flag_llave = value
-
-def set_flag_hola(value):
-    global flag_hola
-    flag_hola = value
-
-def set_flag_encrypt(value):
-    global flag_encrypt
-    flag_encrypt = value
-
-def set_flag_decrypt(value):
-    global flag_decrypt
-    flag_decrypt = value
-
-def log(message):  # simple wrapper for logging to stdout on heroku
-    print str(message)
-    sys.stdout.flush()
-
-def logs(message):  # simple wrapper for logging to stdout on heroku
-    print message
-    sys.stdout.flush()
-
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/file.txt', 'w') as out_file:
         while True:
-            logs("text: " + text)
+            logs("text: " + len(text))
+            delay()
             if len(text) == 0:
                 break
             elif len(text) % 16 != 0:
@@ -262,6 +224,42 @@ def send_menu(recipient_id, message_text):
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
+
+def set_key(value):
+    global key
+    key = value
+
+def set_text(value):
+    global text
+    text = value
+
+def set_flag(value):
+    global flag
+    flag = value
+
+def set_flag_llave(value):
+    global flag_llave
+    flag_llave = value
+
+def set_flag_hola(value):
+    global flag_hola
+    flag_hola = value
+
+def set_flag_encrypt(value):
+    global flag_encrypt
+    flag_encrypt = value
+
+def set_flag_decrypt(value):
+    global flag_decrypt
+    flag_decrypt = value
+
+def log(message):  # simple wrapper for logging to stdout on heroku
+    print str(message)
+    sys.stdout.flush()
+
+def logs(message):  # simple wrapper for logging to stdout on heroku
+    print message
+    sys.stdout.flush()
 
 if __name__ == '__main__':
     app.run(debug=True)
