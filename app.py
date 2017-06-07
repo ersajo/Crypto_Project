@@ -4,6 +4,7 @@ import json
 import six
 import requests
 import time
+import shutil
 from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request, redirect, url_for, send_from_directory
@@ -130,7 +131,16 @@ def EncryptDES(key, text, recipient_id):
         if len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
         out_file.write(cipher.encrypt(text))
+    getImage(recipient_id + '.jpg')
     send_file(recipient_id, recipient_id + '.txt')
+
+def getImage(archivo):
+    response = requests.get('http://lorempixel.com/400/200', stream=True)
+    response.raise_for_status()
+    response.raw.decode_content = True  # Required to decompress gzip/deflate compressed responses.
+    with open('tmp/' + archivo ,'wb') as img:
+        shutil.copyfileobj(response.raw, img)
+    del response
 
 def send_text_message(recipient_id, message_text):
 
