@@ -127,7 +127,7 @@ def EncryptDES(key, text, recipient_id):
     with open('tmp/' + recipient_id + '.txt', 'w') as out_file:
         logs("text: " + str(len(text) % 16))
         time.sleep(3)
-        elif len(text) % 16 != 0:
+        if len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
         out_file.write(cipher.encrypt(text))
     send_file(recipient_id, recipient_id + '.txt')
