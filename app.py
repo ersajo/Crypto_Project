@@ -87,7 +87,7 @@ def webhook():
                         if message == 'Hola':
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
-                        elif message == "prueba":
+                        elif message == "Prueba":
                             EncryptDES('12345678', 'DiamanteDiamant', recipient_id)
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key, text, recipient_id)
@@ -125,14 +125,11 @@ def webhook():
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/' + recipient_id + '.txt', 'w') as out_file:
-        while True:
-            logs("text: " + str(len(text) % 16))
-            time.sleep(3)
-            if len(text) == 0:
-                break
-            elif len(text) % 16 != 0:
-                text += ' ' * (16 - len(text) % 16)
-            out_file.write(text)
+        logs("text: " + str(len(text) % 16))
+        time.sleep(3)
+        elif len(text) % 16 != 0:
+            text += ' ' * (16 - len(text) % 16)
+        out_file.write(cipher.encrypt(text))
     send_file(recipient_id, recipient_id + '.txt')
 
 def send_text_message(recipient_id, message_text):
