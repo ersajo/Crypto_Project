@@ -7,7 +7,7 @@ from Crypto.Cipher import DES
 from Crypto import Random
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
-from pymessenger.bot import Bot
+#from pymessenger.bot import Bot
 
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
@@ -24,7 +24,7 @@ flag_llave = False
 flag_hola = False
 flag_encrypt = False
 flag_decrypt = False
-bot = Bot(ACCESS_TOKEN)
+#bot = Bot(ACCESS_TOKEN)
 
 
 @app.route('/', methods=['GET'])
@@ -88,23 +88,23 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message == 'Hola':
-                            bot.send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
+                            send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_flag(True)
-                        elif message == "proof":
+                        elif message == "Prueba":
                             EncryptDES('12345678', 'Hola', recipient_id)
                         elif len(key) == 8 and message != 'clear':
                             EncryptDES(key, text, recipient_id)
                             set_text(message)
-                            bot.send_text_message(recipient_id, 'message')
+                            send_text_message(recipient_id, 'message')
                             set_flag_encrypt(False)
                         elif message == "clear":
                             set_flag_llave(False)
                             set_flag_hola(False)
                             set_flag_encrypt(False)
                             set_flag_decrypt(False)
-                            bot.send_text_message(recipient_id,'clearing')
+                            send_text_message(recipient_id,'clearing')
                         elif len(message) != 8 and flag == True:
-                            bot.send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
+                            send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                         elif len(message) == 8 and flag == True:
                             set_key(message)
                             send_menu(recipient_id, "What do you want to do next?...")
@@ -118,11 +118,11 @@ def webhook():
                     if postback == "Encrypt":
                         set_flag(False)
                         set_flag_encrypt(True)
-                        bot.send_text_message(recipient_id, "Write the text that you want to encrypt...")
+                        send_text_message(recipient_id, "Write the text that you want to encrypt...")
                     elif postback == "Decrypt":
                         set_flag(False)
                         set_flag_decrypt(True)
-                        bot.send_text_message(recipient_id, 'Well done')
+                        send_text_message(recipient_id, 'Well done')
         return "Success"
 
 def set_key(value):
@@ -173,6 +173,29 @@ def EncryptDES(key, text, recipient_id):
                 chunk += ' ' * (16 - len(chunk) % 16)
             out_file.write(cipher.encrypt(chunk))
     send_file(recipient_id,'file.txt')
+
+def send_text_message(recipient_id, message_text):
+
+    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+
+    params = {
+        "access_token": os.environ["PAGE_ACCESS_TOKEN"]
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = json.dumps({
+        "recipient": {
+            "id": recipient_id
+        },
+        "message": {
+            "text": message_text
+        }
+    })
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
+    if r.status_code != 200:
+        log(r.status_code)
+        log(r.text)
 
 def send_file(recipient_id, files):
     log("sending file to {recipient} {files}".format(recipient=recipient_id, files=files))
