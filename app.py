@@ -158,8 +158,8 @@ def send_text_message(recipient_id, message_text):
         log(r.status_code)
         log(r.text)
 
-def send_file(recipient_id, files):
-    log("sending file to {recipient} {files}".format(recipient=recipient_id, files=files))
+def send_file(recipient_id, message_file):
+    log("sending file to {recipient} {message_file}".format(recipient=recipient_id, message_file=message_file))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -175,7 +175,7 @@ def send_file(recipient_id, files):
             "attachment":{
                 "type":"file",
                 "payload":{
-                    "url":"https://afternoon-mountain-34766.herokuapp.com/tmp/" + files
+                    "url":"https://afternoon-mountain-34766.herokuapp.com/tmp/" + message_file
                 }
             }
         }
