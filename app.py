@@ -165,8 +165,8 @@ def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/file.txt', 'w') as out_file:
         while True:
-            logs("chunk: " + chunk)
             chunk = text
+            logs("chunk: " + chunk)
             if len(chunk) == 0:
                 break
             elif len(chunk) % 16 != 0:
