@@ -128,7 +128,6 @@ def EncryptDES(key, text, recipient_id):
         while True:
             logs("text: " + str(len(text)))
             time.sleep(3)
-            delay()
             if len(text) == 0:
                 break
             elif len(text) % 16 != 0:
