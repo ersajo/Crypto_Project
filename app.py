@@ -18,12 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 key = ''
 text = ''
-flag = False
-flag_llave = False
-flag_hola = False
-flag_encrypt = False
-flag_decrypt = False
-
+status = 'inicio'
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -56,8 +51,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+            return redirect(url_for('uploaded_file', filename=filename))
     return '''
     <!doctype html>
     <title>Upload new File</title>
@@ -85,27 +79,24 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        if message == 'Hola':
+                        if message == 'Hola' and status == 'inicio':
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
-                            set_flag(True)
+                            set_status('Hola')
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Hola', recipient_id)
-                        elif len(key) == 8 and message != 'clear':
+                        elif len(key) == 8 and status == 'Encrypt':
                             EncryptDES(key, text, recipient_id)
                             set_text(message)
                             send_text_message(recipient_id, 'message')
-                            set_flag_encrypt(False)
-                        elif message == "clear":
-                            set_flag_llave(False)
-                            set_flag_hola(False)
-                            set_flag_encrypt(False)
-                            set_flag_decrypt(False)
-                            send_text_message(recipient_id,'clearing')
-                        elif len(message) != 8 and flag == True:
+                        elif len(message) != 8 and status == 'Hola':
                             send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
-                        elif len(message) == 8 and flag == True:
+                        elif len(message) == 8 and status == 'Hola':
                             set_key(message)
+                            set_status('key')
                             send_menu(recipient_id, "What do you want to do next?...")
+                        elif message == 'restart':
+                            set_status('inicio')
+                            send_text_message(recipient_id, 'restarting')
                         else:
                             pass
                     else:
@@ -113,13 +104,11 @@ def webhook():
                 elif x.get("postback"):
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
-                    if postback == "Encrypt":
-                        set_flag(False)
-                        set_flag_encrypt(True)
+                    if postback == "Encrypt" and status == 'key':
+                        set_status('Encrypt')
                         send_text_message(recipient_id, "Write the text that you want to encrypt...")
-                    elif postback == "Decrypt":
-                        set_flag(False)
-                        set_flag_decrypt(True)
+                    elif postback == "Decrypt" and status == 'key':
+                        set_status('Decrypt')
                         send_text_message(recipient_id, 'Well done')
         return "Success"
 
@@ -240,25 +229,9 @@ def set_text(value):
     global text
     text = value
 
-def set_flag(value):
-    global flag
-    flag = value
-
-def set_flag_llave(value):
-    global flag_llave
-    flag_llave = value
-
-def set_flag_hola(value):
-    global flag_hola
-    flag_hola = value
-
-def set_flag_encrypt(value):
-    global flag_encrypt
-    flag_encrypt = value
-
-def set_flag_decrypt(value):
-    global flag_decrypt
-    flag_decrypt = value
+def set_status(value):
+    global status
+    status = value
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
