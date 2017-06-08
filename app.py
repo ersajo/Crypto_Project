@@ -79,14 +79,14 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        if message == 'Hello' and status == 'inicio':
-                            send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
-                            set_status('Hola')
-                        elif message == 'restart':
+                        if message == 'restart':
                             set_text('')
                             set_key('')
                             set_status('inicio')
                             send_text_message(recipient_id, 'restarting')
+                        elif message == 'Hello' and status == 'inicio':
+                            send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
+                            set_status('Hola')
                         elif message == "prueba":
                             EncryptDES('12345678', 'Hola', recipient_id)
                         elif len(key) == 8 and status == 'Encrypt':
