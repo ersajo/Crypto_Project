@@ -11,7 +11,7 @@ from Crypto import Random
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
-real 
+real
 perReduccion = [45, 21, 60, 12, 23, 49, 33,  5,
                 62, 57,  3, 38,  1, 19, 54,  9,
                 15, 20,  7, 50, 43 , 4, 46, 31,
@@ -206,9 +206,9 @@ def webhook():
                         logs('Obts: ' + str(obtenido))
                         url = str(obtenido)
                         url = str(url.split("u'"))
-                        logs("URL: " + url)
-                        url = url[4]
-                        logs("URL: " + str(url))
+                        j = 0
+                        for i in url:
+                            print ('URL ' + j + ': ' + i)
                         respuesta = DecryptDES('12345678', 4, recipient_id, url)
                         send_text_message(recipient_id, respuesta)
                     else:
