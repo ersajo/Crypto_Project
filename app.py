@@ -18,7 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 key = ''
 text = ''
-status = 'inicio1'
+status = 'inicio'
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -90,7 +90,7 @@ def webhook():
                             set_status('Hola')
                         elif message == "prueba":
                             EncryptDES('12345678', 'Hola', recipient_id)
-                        elif status == 'Encrypt' and text == '' and key != '':
+                        elif status == 'Encrypt' and text != '' and key != '':
                             set_text(message)
                             EncryptDES(key, text, recipient_id)
                             send_text_message(recipient_id, 'Finalizado')
