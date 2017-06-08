@@ -109,10 +109,10 @@ def webhook():
                 elif x.get("postback"):
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
-                    if postback == "Encrypt" and status == 'key':
+                    if postback == "Encrypt":
                         set_status('Encrypt')
                         send_text_message(recipient_id, "Write the text that you want to encrypt...")
-                    elif postback == "Decrypt" and status == 'key':
+                    elif postback == "Decrypt":
                         set_status('Decrypt')
                         send_text_message(recipient_id, 'Well done')
         return "Success"
