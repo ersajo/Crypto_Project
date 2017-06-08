@@ -70,6 +70,7 @@ def uploaded_file(filename):
 def webhook():
     output = request.get_json()
     log(output)
+    logs("status: " + status)
     if output["object"] == "page":
 
         for event in output["entry"]:
@@ -84,7 +85,7 @@ def webhook():
                             set_key('')
                             set_status('inicio')
                             send_text_message(recipient_id, 'Say Hello')
-                        elif message == 'Hello' and status == 'inicio':
+                        elif message == 'Hello':
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_status('Hola')
                         elif message == "prueba":
@@ -103,7 +104,6 @@ def webhook():
                             set_status('key')
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
-                            send_text_message(recipient_id, 'Please write restart')
                             pass
                     else:
                         pass
