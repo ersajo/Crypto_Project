@@ -11,6 +11,7 @@ from Crypto import Random
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
+real 
 perReduccion = [45, 21, 60, 12, 23, 49, 33,  5,
                 62, 57,  3, 38,  1, 19, 54,  9,
                 15, 20,  7, 50, 43 , 4, 46, 31,
