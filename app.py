@@ -337,7 +337,7 @@ def expandir(Num, temp):
     elif (Num == 4):
         for bit in perSecBin5:
             logs("bit: " + str(bit))
-            out.append(temp[bit-1])
+            #out.append(temp[bit-1])
     elif (Num == 5):
         for bit in perSecBin6:
             out.append(temp[bit-1])
