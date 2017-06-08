@@ -201,8 +201,10 @@ def webhook():
                         else:
                             pass
                     elif x['message'].get('attachments'):
-                        attachments = x['message']['attachments'].type
-                        logs('Type: ' + attachments)
+                        obtenido = x['message']['attachments']
+                        logs('Obts: ' + str(obtenido)[25:])
+                        url = str(obtenido).partition("[{u'payload': {u'url': u'")
+                        logs('URL: ' + str(url))
                     else:
                         pass
                 elif x.get("postback"):
