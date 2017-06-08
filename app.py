@@ -89,7 +89,7 @@ def webhook():
                             set_status('Hola')
                         elif message == "prueba":
                             EncryptDES('12345678', 'Hola', recipient_id)
-                        elif len(key) == 8 and status == 'Encrypt':
+                        elif message != '' and status == 'Encrypt':
                             EncryptDES(key, text, recipient_id)
                             set_text(message)
                             send_text_message(recipient_id, 'Finalizado')
