@@ -208,7 +208,7 @@ def webhook():
                         j = 0
                         for i in url:
                             logs("URL " + str(j) + ": " + str(i))
-                            if(url[:5] == 'https')
+                            if(url[:5] == 'https'):
                                 url = url = str(url[j])
                             j += 1
                         url = str(url[5])
