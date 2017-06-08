@@ -238,17 +238,17 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     for i in range(48):
         aux = C[k][i] ^ C[k+1][i]
         temp.append(aux)
-        seq1 = expandir(NumBits1 % 8, temp)
-        secBin = getSecuenciaBin(NumBits1, C, seq1, k)
-        seq2 = getSubSecuencia(NumBits1, secBin)
-        getImageFromURL('temp' + recipient_id + '.jpg', URL)
-        with open('tmp/temp' + recipient_id + '.jpg','rb') as contenedor:
-            contenido = tobits(contenedor.read())
-            cifrado = extract(contenido, seq2, 4)
+    seq1 = expandir(NumBits1 % 8, temp)
+    secBin = getSecuenciaBin(NumBits1, C, seq1, k)
+    seq2 = getSubSecuencia(NumBits1, secBin)
+    getImageFromURL('temp' + recipient_id + '.jpg', URL)
+    with open('tmp/temp' + recipient_id + '.jpg','rb') as contenedor:
+        contenido = tobits(contenedor.read())
+        cifrado = extract(contenido, seq2, 4)
 
-        cipher = DES.new(key, DES.MODE_OFB, '12345678')
-        mensaje = cipher.decrypt(cifrado).strip()
-        return mensaje
+    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    mensaje = cipher.decrypt(cifrado).strip()
+    return mensaje
 
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
