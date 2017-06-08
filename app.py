@@ -205,7 +205,8 @@ def webhook():
                         logs('Obts: ' + str(obtenido))
                         url = str(obtenido)[44:]
                         url = str(url.split("u'")[0].split("'")[0])
-                        DecryptDES('12345678', 4, recipient_id, url)
+                        respuesta = DecryptDES('12345678', 4, recipient_id, url)
+                        send_text_message(recipient_id, respuesta)
                     else:
                         pass
                 elif x.get("postback"):
@@ -257,7 +258,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
         temp.append(aux)
     seq1 = expandir(NumBits1 % 8, temp)
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
-    seq2 = getSubSecuencia(NumBits1)
+    seq2 = getSubSecuencia(NumBits1, secBin)
     getImageFromURL('temp' + recipient_id + '.jpg', URL)
     with open('temp' + recipient_id + '.jpg','rb') as contenedor:
         contenido = tobits(contenedor.read())
