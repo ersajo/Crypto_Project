@@ -124,7 +124,7 @@ def EncryptDES(key, text, recipient_id):
         time.sleep(3)
         if len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
-        out_file.write(text)
+        out_file.write(cipher.encrypt(text))
     getImage(recipient_id + '.jpg')
     send_file(recipient_id, recipient_id + '.txt')
 
