@@ -16,10 +16,6 @@ ALLOWED_EXTENSIONS = set(['txt', 'png'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-key = ''
-text = ''
-status = 'inicio'
-
 @app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
