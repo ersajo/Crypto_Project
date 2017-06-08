@@ -267,7 +267,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
     seq2 = getSubSecuencia(NumBits1, secBin)
     getImageFromURL('temp' + recipient_id + '.jpg', URL)
-    with open('temp' + recipient_id + '.jpg','rb') as contenedor:
+    with open('tmp/temp' + recipient_id + '.jpg','rb') as contenedor:
         contenido = tobits(contenedor.read())
         cifrado = extract(contenido, seq2)
 
