@@ -233,7 +233,7 @@ def EncryptDES(key, text, recipient_id):
         temp.append(aux)
     seq1 = expandir(NumBits1 % 8, temp)
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
-    seq2 = getSubSecuencia(NumBits1)
+    seq2 = getSubSecuencia(NumBits1, secBin)
     with open('tmp/' + recipient_id + '.jpg', 'rb+') as img:
         content = tobits(img.read())
         content = insert(content, seq2, message)
@@ -327,7 +327,7 @@ def getSecuenciaBin(NumBits1, C, seq1, k):
             getSecuenciaBin(NumBits1, nC, seq1, k)
     return seq1
 
-def getSubSecuencia(unos):
+def getSubSecuencia(unos,secBin):
     r = 0
     seq2 = []
     while unos > 0:
