@@ -205,10 +205,6 @@ def webhook():
                         logs('Obts: ' + str(obtenido))
                         url = str(obtenido)
                         url = url.split("u'")
-                        j = 0
-                        for i in url:
-                            logs("URL " + str(j) + ": " + str(i))
-                            j += 1
                         url = str(url[5])
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
