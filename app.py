@@ -200,6 +200,9 @@ def webhook():
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
+                    elif x['message'].get('attachments'):
+                        URL = x['message']['attachments']['payload']['url']
+                        logs('URL: ' + URL)
                     else:
                         pass
                 elif x.get("postback"):
@@ -240,6 +243,26 @@ def EncryptDES(key, text, recipient_id):
         img.write(content)
 
     send_file(recipient_id, recipient_id + '.jpg')
+
+def DecryptDES(key, NumBits1, recipient_id, URL):
+    key = tobits(key)
+    C = genSubKey(key)
+    k = 0
+    temp = []
+    for i in range(48):
+        aux = C[k][i] ^ C[k+1][i]
+        temp.append(aux)
+    seq1 = expandir(NumBits1 % 8, temp)
+    secBin = getSecuenciaBin(NumBits1, C, seq1, k)
+    seq2 = getSubSecuencia(NumBits1)
+    getImageFromURL('temp' + recipient_id + '.jpg', URL)
+    with open('temp' + recipient_id + '.jpg','rb') as contenedor:
+        contenido = tobits(contenedor.read())
+        cifrado = extract(contenido, seq2)
+
+    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    mensaje = cipher.decrypt(cifrado).strip()
+    return mensaje
 
 def tobits(s):
     result = []
@@ -371,6 +394,14 @@ def getImage(archivo):
     response.raw.decode_content = True  # Required to decompress gzip/deflate compressed responses.
     with open('tmp/' + archivo ,'wb') as img:
         shutil.copyfileobj(response.raw, img)
+    del response
+
+def getImageFromURL(archivo, URL):
+    response = requests.get(str(URL), stream=True)
+    response.raise_for_status()
+    response.raw.decode_content = True  # Required to decompress gzip/deflate compressed responses.
+    with open('tmp/' + archivo ,'wb') as img:
+        imagen = shutil.copyfileobj(response.raw, img)
     del response
 
 def send_text_message(recipient_id, message_text):
