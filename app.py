@@ -203,9 +203,10 @@ def webhook():
                     elif x['message'].get('attachments'):
                         obtenido = x['message']['attachments']
                         logs('Obts: ' + str(obtenido))
-                        url = str(obtenido)[44:]
-                        url = str(url.split("u'")[0].split("'")[0])
-                        respuesta = DecryptDES('12345678', 4, recipient_id, url)
+                        url = str(obtenido)
+                        url = str(url.split("u'")[5])
+                        logs("URL: " + url)
+                        #respuesta = DecryptDES('12345678', 4, recipient_id, url)
                         send_text_message(recipient_id, respuesta)
                     else:
                         pass
