@@ -121,21 +121,22 @@ def webhook():
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/' + recipient_id + '.txt', 'w') as out_file:
-        logs("text: " + str(len(text) % 16))
         time.sleep(3)
         if len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
-        out_file.write(cipher.encrypt(text))
-    getImage(recipient_id + '.jpg')
-    send_file(recipient_id, recipient_id + '.txt')
+        contenido = cipher.encrypt(text)
+    imagen = getImage(recipient_id + '.jpg')
+    log(imagen)
+    #send_file(recipient_id, recipient_id + '.txt')
 
 def getImage(archivo):
     response = requests.get('http://lorempixel.com/400/200', stream=True)
     response.raise_for_status()
     response.raw.decode_content = True  # Required to decompress gzip/deflate compressed responses.
     with open('tmp/' + archivo ,'wb') as img:
-        shutil.copyfileobj(response.raw, img)
+        img = shutil.copyfileobj(response.raw, img)
     del response
+    return img
 
 def send_text_message(recipient_id, message_text):
 
