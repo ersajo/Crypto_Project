@@ -125,8 +125,10 @@ def EncryptDES(key, text, recipient_id):
         if len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
         contenido = cipher.encrypt(text)
-    imagen = getImage(recipient_id + '.jpg')
-    log(imagen)
+    getImage(recipient_id + '.jpg')
+    with open('tmp/' + recipient_id + '.jpg', 'rb') as img:
+        content = img.read()
+    logs(content)
     #send_file(recipient_id, recipient_id + '.txt')
 
 def getImage(archivo):
@@ -134,9 +136,8 @@ def getImage(archivo):
     response.raise_for_status()
     response.raw.decode_content = True  # Required to decompress gzip/deflate compressed responses.
     with open('tmp/' + archivo ,'wb') as img:
-        img = shutil.copyfileobj(response.raw, img)
+        shutil.copyfileobj(response.raw, img)
     del response
-    return img
 
 def send_text_message(recipient_id, message_text):
 
