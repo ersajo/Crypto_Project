@@ -269,7 +269,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     getImageFromURL('temp' + recipient_id + '.jpg', URL)
     with open('tmp/temp' + recipient_id + '.jpg','rb') as contenedor:
         contenido = tobits(contenedor.read())
-        cifrado = extract(contenido, seq2)
+    cifrado = extract(contenido, seq2, 4)
 
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado).strip()
@@ -387,7 +387,7 @@ def insert(content, seq2, message):
     content = frombits(content)
     return content
 
-def extract(contenido, NumBits1):
+def extract(contenido, seq2, NumBits1):
     posSeq2 = 0
     mensaje = []
     longitud = len(seq2)
