@@ -94,9 +94,10 @@ def webhook():
                             EncryptDES(key, text, recipient_id)
                             send_text_message(recipient_id, 'Finalizado')
                             set_status('inicio')
-                        elif len(message) != 8 and status == 'Hola':
+                        elif len(message) != 8 and (status == 'Hola' or status == 'retry):
+                            set_status('retry')
                             send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
-                        elif len(message) == 8 and status == 'Hola':
+                        elif len(message) == 8 and (status == 'Hola' or status == 'retry):
                             set_key(message)
                             set_status('key')
                             send_menu(recipient_id, "What do you want to do next?...")
