@@ -103,8 +103,6 @@ def webhook():
                             logs("Key: " + key)
                             set_status('key')
                             send_menu(recipient_id, "What do you want to do next?...")
-                        else:
-                            pass
                     else:
                         pass
                 elif x.get("postback"):
