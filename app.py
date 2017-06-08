@@ -206,7 +206,7 @@ def webhook():
                         url = str(obtenido)
                         url = str(url.split("u'"))
                         logs("URL: " + url)
-                        url = url[6]
+                        url = url[0]
                         logs("URL: " + str(url))
                         #respuesta = DecryptDES('12345678', 4, recipient_id, url)
                         #send_text_message(recipient_id, respuesta)
