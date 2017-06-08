@@ -219,12 +219,27 @@ def EncryptDES(key, text, recipient_id):
         time.sleep(3)
         if len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
-        contenido = cipher.encrypt(text)
+        message = cipher.encrypt(text)
     getImage(recipient_id + '.jpg')
-    with open('tmp/' + recipient_id + '.jpg', 'rb') as img:
-        content = img.read()
-    logs(content)
-    #send_file(recipient_id, recipient_id + '.txt')
+
+    key = tobits(key)
+    C = genSubKey(key)
+    message = tobits(message)
+    NumBits1 = len(message)
+    k = 0
+    temp = []
+    for i in range(48):
+        aux = C[k][i] ^ C[k+1][i]
+        temp.append(aux)
+    seq1 = expandir(NumBits1 % 8, temp)
+    secBin = getSecuenciaBin(NumBits1, C, seq1, k)
+    seq2 = getSubSecuencia(NumBits1)
+    with open('tmp/' + recipient_id + '.jpg', 'rb+') as img:
+        content = tobits(img.read())
+        content = insert(content, seq2, message)
+        img.write(content)
+
+    send_file(recipient_id, recipient_id + '.jpg')
 
 def tobits(s):
     result = []
