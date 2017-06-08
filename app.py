@@ -205,7 +205,7 @@ def webhook():
                         logs('Obts: ' + str(obtenido))
                         url = str(obtenido)[44:]
                         for i in url.split("'}}]"):
-                            logs('URL: ' + str(url.split("'}}]"))[i])
+                            logs('URL: ' + i)
                     else:
                         pass
                 elif x.get("postback"):
