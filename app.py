@@ -202,7 +202,7 @@ def webhook():
                             pass
                     elif x['message'].get('attachments'):
                         URL = x['message']['attachments']['payload']['url']
-                        logs('URL: ' + URL)
+                        logs('URL: ' + URl)
                     else:
                         pass
                 elif x.get("postback"):
