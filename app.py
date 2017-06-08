@@ -99,6 +99,7 @@ def webhook():
                             send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                         elif len(message) == 8 and (status == 'Hola' or status == 'retry'):
                             set_key(message)
+                            logs("Key: " + key)
                             set_status('key')
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
