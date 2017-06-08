@@ -69,7 +69,7 @@ def uploaded_file(filename):
 @app.route('/', methods=['POST'])
 def webhook():
     output = request.get_json()
-    #log(output)
+    log(output)
     logs("status: " + status)
     if output["object"] == "page":
 
@@ -103,6 +103,8 @@ def webhook():
                             logs("Key: " + key)
                             set_status('key')
                             send_menu(recipient_id, "What do you want to do next?...")
+                        else:
+                            pass
                     else:
                         pass
                 elif x.get("postback"):
@@ -154,9 +156,9 @@ def send_text_message(recipient_id, message_text):
         }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    """if r.status_code != 200:
+    if r.status_code != 200:
         log(r.status_code)
-        log(r.text)"""
+        log(r.text)
 
 def send_file(recipient_id, message_file):
     log("sending file to {recipient} {message_file}".format(recipient=recipient_id, message_file=message_file))
@@ -181,9 +183,9 @@ def send_file(recipient_id, message_file):
         }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    """if r.status_code != 200:
+    if r.status_code != 200:
         log(r.status_code)
-        log(r.text)"""
+        log(r.text)
 
 def send_menu(recipient_id, message_text):
     log("sending menu to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
@@ -221,9 +223,9 @@ def send_menu(recipient_id, message_text):
         }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
-    """if r.status_code != 200:
+    if r.status_code != 200:
         log(r.status_code)
-        log(r.text)"""
+        log(r.text)
 
 def set_key(value):
     global key
