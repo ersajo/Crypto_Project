@@ -82,6 +82,9 @@ def webhook():
                         if message == 'Hello' and status == 'inicio':
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_status('Hola')
+                        elif message == 'restart':
+                            set_status('inicio')
+                            send_text_message(recipient_id, 'restarting')
                         elif message == "prueba":
                             EncryptDES('12345678', 'Hola', recipient_id)
                         elif len(key) == 8 and status == 'Encrypt':
@@ -95,9 +98,6 @@ def webhook():
                             set_key(message)
                             set_status('key')
                             send_menu(recipient_id, "What do you want to do next?...")
-                        elif message == 'restart':
-                            set_status('inicio')
-                            send_text_message(recipient_id, 'restarting')
                         else:
                             send_text_message(recipient_id, 'Please write restart')
                             pass
