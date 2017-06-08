@@ -83,6 +83,8 @@ def webhook():
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_status('Hola')
                         elif message == 'restart':
+                            set_text('')
+                            set_key('')
                             set_status('inicio')
                             send_text_message(recipient_id, 'restarting')
                         elif message == "prueba":
