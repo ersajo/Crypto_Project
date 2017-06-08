@@ -412,6 +412,7 @@ def getImage(archivo):
     del response
 
 def getImageFromURL(archivo, URL):
+    logs("Image URL: " + URL)
     response = requests.get(str(URL), stream=True)
     response.raise_for_status()
     response.raw.decode_content = True  # Required to decompress gzip/deflate compressed responses.
