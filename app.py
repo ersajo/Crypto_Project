@@ -83,15 +83,15 @@ def webhook():
                             set_text('')
                             set_key('')
                             set_status('inicio')
-                            send_text_message(recipient_id, 'restarting')
+                            send_text_message(recipient_id, 'Say Hello')
                         elif message == 'Hello' and status == 'inicio':
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_status('Hola')
                         elif message == "prueba":
                             EncryptDES('12345678', 'Hola', recipient_id)
-                        elif message != '' and status == 'Encrypt':
-                            EncryptDES(key, text, recipient_id)
+                        elif status == 'Encrypt':
                             set_text(message)
+                            EncryptDES(key, text, recipient_id)
                             send_text_message(recipient_id, 'Finalizado')
                             set_status('inicio')
                         elif len(message) != 8 and status == 'Hola':
