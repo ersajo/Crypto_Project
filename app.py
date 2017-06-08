@@ -99,7 +99,7 @@ def webhook():
                             set_status('inicio')
                             send_text_message(recipient_id, 'restarting')
                         else:
-                            send_text_message(recipient_id, 'Please write Hello')
+                            send_text_message(recipient_id, 'Please write restart')
                             pass
                     else:
                         pass
