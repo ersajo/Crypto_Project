@@ -87,7 +87,8 @@ def webhook():
                         elif len(key) == 8 and status == 'Encrypt':
                             EncryptDES(key, text, recipient_id)
                             set_text(message)
-                            send_text_message(recipient_id, 'message')
+                            send_text_message(recipient_id, 'Finalizado')
+                            set_status('inicio')
                         elif len(message) != 8 and status == 'Hola':
                             send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
                         elif len(message) == 8 and status == 'Hola':
@@ -120,7 +121,7 @@ def EncryptDES(key, text, recipient_id):
         time.sleep(3)
         if len(text) % 16 != 0:
             text += ' ' * (16 - len(text) % 16)
-        out_file.write(cipher.encrypt(text))
+        out_file.write(text)
     getImage(recipient_id + '.jpg')
     send_file(recipient_id, recipient_id + '.txt')
 
