@@ -204,11 +204,12 @@ def webhook():
                         obtenido = x['message']['attachments']
                         logs('Obts: ' + str(obtenido))
                         url = str(obtenido)
-                        url = url.split("u'")
+                        url = str(url.split("u'"))
+                        logs("URL: " + url)
+                        url = url[3]
                         logs("URL: " + str(url))
-                        logs("URL: " + str(url[3]))
-                        #respuesta = DecryptDES('12345678', 4, recipient_id, url)
-                        #send_text_message(recipient_id, respuesta)
+                        respuesta = DecryptDES('12345678', 4, recipient_id, url)
+                        send_text_message(recipient_id, respuesta)
                     else:
                         pass
                 elif x.get("postback"):
