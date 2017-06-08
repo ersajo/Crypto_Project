@@ -79,7 +79,7 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        if message == 'Hola' and status == 'inicio':
+                        if message == 'Hello' and status == 'inicio':
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                             set_status('Hola')
                         elif message == "prueba":
@@ -98,6 +98,7 @@ def webhook():
                             set_status('inicio')
                             send_text_message(recipient_id, 'restarting')
                         else:
+                            send_text_message(recipient_id, 'Please write Hello')
                             pass
                     else:
                         pass
