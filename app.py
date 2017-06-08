@@ -202,7 +202,7 @@ def webhook():
                             pass
                     elif x['message'].get('attachments'):
                         obtenido = x['message']['attachments']
-                        logs('Obts: ' + str(obtenido))
+                        logs(json.loads(obtenido))
                         url = str(obtenido).format(payload, url, tipo)
                         logs('URL: ' + str(url))
                     else:
