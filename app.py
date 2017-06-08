@@ -205,7 +205,7 @@ def webhook():
                         logs('Obts: ' + str(obtenido))
                         url = str(obtenido)[44:]
                         url = str(url.split("u'")[0].split("'")[0])
-                        logs('URL: ' + url)
+                        DecryptDES('12345678', 4, recipient_id, url)
                     else:
                         pass
                 elif x.get("postback"):
