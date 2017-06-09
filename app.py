@@ -208,7 +208,6 @@ def webhook():
                         j = 0
                         for i in url:
                             logs("URL " + str(j) + ": " + str(i))
-                            logs("cadena: " + str(i[:5]))
                             if(i[:5] == 'https'):
                                 logs("Inside")
                                 url = str(i)
