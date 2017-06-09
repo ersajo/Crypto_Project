@@ -202,12 +202,10 @@ def webhook():
                             pass
                     elif x['message'].get('attachments'):
                         obtenido = x['message']['attachments']
-                        logs('Obts: ' + str(obtenido))
                         url = str(obtenido)
                         url = url.split("u'")
                         j = 0
                         for i in url:
-                            logs("URL " + str(j) + ": " + str(i))
                             if(i[:5] == 'https'):
                                 url = str(i)
                             j += 1
