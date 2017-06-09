@@ -247,6 +247,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
         contenido = tobits(contenedor.read())
         cifrado = extract(contenido, seq2, 4)
 
+    key = frombits(key)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado).strip()
     return mensaje
