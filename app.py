@@ -213,7 +213,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 32, recipient_id, url)
                         logs("Respuesta: " + respuesta)
-                        #send_text_message(recipient_id, respuesta)
+                        send_text_message(recipient_id, respuesta)
                     else:
                         pass
                 elif x.get("postback"):
@@ -247,7 +247,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     logs("Cifrado: " + str(len(cifrado)))
     key = frombits(key)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    mensaje = cipher.decrypt(cifrado)
+    mensaje = cipher.decrypt('mn��i��-')
     logs("Mensaje: " + str(mensaje))
     return mensaje
 
