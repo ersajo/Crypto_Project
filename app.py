@@ -404,7 +404,7 @@ def extract(contenido, seq2, NumBits1):
     return mensaje
 
 def getImage(archivo):
-    response = requests.get('http://lorempixel.com/10/10', stream=True)
+    response = requests.get('http://lorempixel.com/400/200', stream=True)
     response.raise_for_status()
     response.raw.decode_content = True  # Required to decompress gzip/deflate compressed responses.
     with open('tmp/' + archivo ,'wb') as img:
