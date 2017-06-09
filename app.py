@@ -241,9 +241,9 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     getImageFromURL('temp' + recipient_id + '.jpg', URL)
     with open('tmp/temp' + recipient_id + '.jpg','rb') as contenedor:
         contenido = tobits(contenedor.read())
+    cifrado = extract(contenido, seq2, NumBits1)
     if len(cifrado) % 16 != 0:
         cifrado += ' ' * (16 - len(cifrado) % 16)
-    cifrado = extract(contenido, seq2, NumBits1)
     logs("Cifrado: " + str(len(cifrado)))
     key = frombits(key)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
