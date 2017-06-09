@@ -242,7 +242,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     with open('tmp/temp' + recipient_id + '.jpg','rb') as contenedor:
         contenido = tobits(contenedor.read())
     cifrado = extract(contenido, seq2, NumBits1)
-
+    logs("Cifrado: " + str(cifrado))
     key = frombits(key)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado)
