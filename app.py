@@ -241,6 +241,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     getImageFromURL('temp' + recipient_id + '.jpg', URL)
     with open('tmp/temp' + recipient_id + '.jpg','rb') as contenedor:
         contenido = tobits(contenedor.read())
+        logs("Contenido: " + contenido)
         cifrado = extract(contenido, seq2, 4)
 
     key = frombits(key)
