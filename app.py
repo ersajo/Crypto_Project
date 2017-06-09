@@ -254,8 +254,8 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     with open('tmp/' + recipient_id + '.txt', 'w') as out_file:
-        if len(text) % 16 != 0:
-            text += ' ' * (16 - len(text) % 16)
+        if len(text) % 8 != 0:
+            text += ' ' * (8 - len(text) % 8)
         message = cipher.encrypt(text)
     getImage(recipient_id + '.png')
     logs("Cifrado: " + str(len(message)))
