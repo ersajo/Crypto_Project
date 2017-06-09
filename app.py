@@ -273,8 +273,8 @@ def EncryptDES(key, text, recipient_id):
     seq2 = getSubSecuencia(NumBits1, secBin)
     with open('tmp/' + recipient_id + '.png', 'rb+') as img:
         content = tobits(img.read())
-        content = insert(content, seq2, message)
-        img.write(content)
+    content = insert(content, seq2, message)
+    img.write(content)
 
     send_file(recipient_id, recipient_id + '.png')
 
