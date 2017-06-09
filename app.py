@@ -258,7 +258,7 @@ def EncryptDES(key, text, recipient_id):
             text += ' ' * (8 - len(text) % 8)
         message = cipher.encrypt(text)
     getImage(recipient_id + '.png')
-    logs("Cifrado: " + str(len(message)))
+    logs("Cifrado: " + str(message))
     key = tobits(key)
     C = genSubKey(key)
     message = tobits(message)
