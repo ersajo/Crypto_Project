@@ -278,7 +278,7 @@ def EncryptDES(key, text, recipient_id):
         content  = tobits(content)
         content = insert(content, seq2, message, imglen)
         img.write(content)
-    send_file(recipient_id, recipient_id + '.txt')
+    send_file(recipient_id, recipient_id + 't.txt')
 
 
 def tobits(s):
