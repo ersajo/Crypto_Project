@@ -255,8 +255,6 @@ def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
-    logs("Mensaje: |" + str(text) + "|")
-    logs("Mensaje longitud: " + str(len(text)))
     cifrado = cipher.encrypt(text)
     with open('/tmp/file.txt','w') as archivo:
         archivo.write(cifrado)
@@ -268,6 +266,7 @@ def EncryptDES(key, text, recipient_id):
     with open('tmp/file.txt', 'r') as archivo:
         message = archivo.read()
     logs("longitud mensaje: " + str(len(message)))
+    logs("Mensaje: |" + str(message) + "|")
     message = tobits(message)
     NumBits1 = len(message)
     k = 0
