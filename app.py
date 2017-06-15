@@ -203,7 +203,7 @@ def webhook():
                             send_text_message(recipient_id,text)
                         elif message[:6] == "Bytes:":
                             global BytesUser
-                            tmpBytes = ord(message[6:])
+                            tmpBytes = int(message[6:])
                             logs("tmpBytes:" + str(tmpBytes))
                             while (tmpBytes % 8 != 0):
                                 tmpBytes += 1
