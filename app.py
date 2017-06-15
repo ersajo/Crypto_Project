@@ -176,10 +176,13 @@ def webhook():
                         if message == 'restart':
                             set_text('')
                             set_key('')
-                            send_text_message(recipient_id, 'Say Hello')
-                        elif str(message)[:5] == "Key: ":
-                            key = message[5:]
-                            logs("Key:" + key)
+                        elif message[:5] == "Key: ":
+                            if len(message[5:]) != 8:
+                                send_text_message(recipient_id, 'The length of the key must be 8 bytes')
+                            else:
+                                key = message[5:]
+                                logs("Key:" + key)
+                        elif
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
