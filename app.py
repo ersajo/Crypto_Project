@@ -195,6 +195,9 @@ def webhook():
                             text = message[5:]
                             logs("Text:" + text)
                             send_text_message(recipient_id, 'Success')
+                        elif message == "Print text":
+                            global text
+                            send_text_message(recipient_id,text)
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
