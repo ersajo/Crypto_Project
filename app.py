@@ -257,14 +257,16 @@ def EncryptDES(key, text, recipient_id):
         text += ' ' * (8 - len(text) % 8)
     logs("Mensaje: |" + str(text) + "|")
     logs("Mensaje longitud: " + str(len(text)))
-    message = cipher.encrypt(text)
+    cifrado = cipher.encrypt(text)
     with open('/tmp/file.txt','w') as archivo:
-        archivo.write(message)
-    logs("Cifrado: |" + str(message) + "|")
-    logs("Cifrado longitud: " + str(len(message)))
+        archivo.write(cifrado)
+    logs("Cifrado: |" + str(cifrado) + "|")
+    logs("Cifrado longitud: " + str(len(cifrado)))
     getImage(recipient_id + '.png')
     key = tobits(key)
     C = genSubKey(key)
+    with open('tmp/file.txt'. 'r') as archivo:
+        message = archivo.read()
     message = tobits(message)
     NumBits1 = len(message)
     k = 0
