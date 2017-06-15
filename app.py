@@ -253,7 +253,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     return mensaje
 
 def EncryptDES(key, text, recipient_id):
-    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    cipher = DES.new('12345678')
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
     logs("Mensaje: |" + str(text) + "|")
