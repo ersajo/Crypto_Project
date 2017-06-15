@@ -176,7 +176,7 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message == 'restart':
-                            global key
+                            global key, text
                             key = ''
                             text = ''
                         elif message[:4] == "Key:":
@@ -186,12 +186,15 @@ def webhook():
                                 global key
                                 key = message[4:]
                                 logs("Key:" + key)
+                                send_text_message(recipient_id, 'Success')
                         elif message == "Print key":
                             global key
                             send_text_message(recipient_id, key)
                         elif message[:5] == "Text:":
                             global text
                             text = message[5:]
+                            logs("Text:" + text)
+                            send_text_message(recipient_id, 'Success')
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
