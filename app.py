@@ -1,3 +1,4 @@
+import time
 import os
 import sys
 import json
@@ -260,6 +261,7 @@ def EncryptDES(key, text, recipient_id):
     message = cipher.encrypt(text)
     with open('/tmp/file.txt','w') as archivo:
         archivo.write(message)
+    time.sleep(20)
     logs("Cifrado: |" + str(message) + "|")
     logs("Cifrado longitud: " + str(len(message)))
     getImage(recipient_id + '.png')
