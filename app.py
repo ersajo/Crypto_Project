@@ -108,8 +108,9 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               42, 34, 43, 41, 13, 11, 45, 29,
               36,  3, 32, 27, 21, 40, 12, 31]
 
-key = ''
-text = ''
+key = 'def'
+text = 'def'
+BytesUser = 0
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
@@ -176,9 +177,11 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message == 'restart':
-                            global key, text
-                            key = ''
-                            text = ''
+                            global key, text, BytesUser
+                            key = 'def'
+                            text = 'def'
+                            BytesUser = 0
+                            send_text_message(recipient_id, 'Values set to default')
                         elif message[:4] == "Key:":
                             if len(message[4:]) != 8:
                                 send_text_message(recipient_id, 'The length of the key must be 8 bytes')
@@ -198,6 +201,18 @@ def webhook():
                         elif message == "Print text":
                             global text
                             send_text_message(recipient_id,text)
+                        elif message[:6] == "Bytes:":
+                            global BytesUser
+                            tmpBytes = ord(message[6:])
+                            logs("tmpBytes:" + tmpBytes)
+                            while (tmpBytes % 8 != 0):
+                                tmpBytes += 1
+                            BytesUser = tmpBytes
+                            logs("Bytes:" + BytesUser)
+                            send_text_message(recipient_id, 'Success')
+                        elif message == "Print bytes":
+                            global BytesUser
+                            send_text_message(recipient_id, BytesUser)
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
