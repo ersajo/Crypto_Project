@@ -256,6 +256,7 @@ def EncryptDES(key, text, recipient_id):
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
     logs("Mensaje: |" + str(text) + "|")
+    logs("Mensaje longitud: " + str(len(text)))
     message = cipher.encrypt(text)
     with open('/tmp/file.txt','w') as archivo:
         archivo.write(message)
