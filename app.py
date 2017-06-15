@@ -184,7 +184,7 @@ def webhook():
                             set_status('Hola')
                             send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                         elif message == "Prueba":
-                            EncryptDES('12345678', 'Hola', recipient_id)
+                            EncryptDES('12345678', 'Adios', recipient_id)
                         elif status == 'Encrypt' and text == '' and key != '':
                             set_text(message)
                             EncryptDES(key, text, recipient_id)
@@ -212,7 +212,7 @@ def webhook():
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
-                        logs("Respuesta: " + respuesta)
+                        logs("Respuesta: |" + respuesta + "|")
                         send_text_message(recipient_id, respuesta)
         return "Success"
 
@@ -244,7 +244,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado)
     logs("Mensaje: /" + str(mensaje) + "/")
-    return mensaje
+    return mensaje.strip()
 
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
