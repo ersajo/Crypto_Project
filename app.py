@@ -109,6 +109,7 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               36,  3, 32, 27, 21, 40, 12, 31]
 
 key = ''
+text = ''
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
@@ -175,18 +176,22 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message == 'restart':
-                            set_text('')
-                            set_key('')
-                        elif message[:5] == "Key: ":
-                            if len(message[5:]) != 8:
+                            global key
+                            key = ''
+                            text = ''
+                        elif message[:4] == "Key:":
+                            if len(message[4:]) != 8:
                                 send_text_message(recipient_id, 'The length of the key must be 8 bytes')
                             else:
                                 global key
-                                key = message[5:]
+                                key = message[4:]
                                 logs("Key:" + key)
                         elif message == "Print key":
                             global key
                             send_text_message(recipient_id, key)
+                        elif message[:5] == "Text:":
+                            global text
+                            text = message[5:]
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
@@ -504,14 +509,6 @@ def send_menu(recipient_id, message_text):
     if r.status_code != 200:
         log(r.status_code)
         log(r.text)
-
-def set_key(value):
-    global key
-    key = value
-
-def set_text(value):
-    global text
-    text = value
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
