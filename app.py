@@ -200,7 +200,7 @@ def webhook():
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
-                    elif x['message'].get('attachments'):
+                    """elif x['message'].get('attachments'):
                         obtenido = x['message']['attachments']
                         url = str(obtenido)
                         url = url.split("u'")
@@ -213,7 +213,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
                         logs("Respuesta: " + respuesta)
-                        #send_text_message(recipient_id, respuesta)
+                        #send_text_message(recipient_id, respuesta)"""
                     else:
                         pass
                 elif x.get("postback"):
