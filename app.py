@@ -254,9 +254,12 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
 
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    logs("Mensaje: " + str(text))
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
     message = cipher.encrypt(text)
+    logs("Cifrado: " + str(message))
+    logs("Cifrado longitud: " + str(len(message)))
     getImage(recipient_id + '.png')
     key = tobits(key)
     C = genSubKey(key)
