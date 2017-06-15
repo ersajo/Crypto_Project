@@ -7,7 +7,6 @@ import time
 import shutil
 import numpy
 from Crypto.Cipher import DES
-from Crypto import Random
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
@@ -255,7 +254,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
 
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    logs("Mensaje: " + str(text))
+    logs("Mensaje: |" + str(text) + "|")
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
     message = cipher.encrypt(text)
