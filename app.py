@@ -213,6 +213,9 @@ def webhook():
                         elif message == "Print bytes":
                             global BytesUser
                             send_text_message(recipient_id, BytesUser)
+                        elif message == "Encrypt":
+                            global key, text
+                            EncryptDES(key, text, recipient_id)
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
@@ -228,7 +231,7 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
+                        respuesta = DecryptDES(key, BytesUser * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
                         send_text_message(recipient_id, respuesta)
         return "Success"
