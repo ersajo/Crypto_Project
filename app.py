@@ -182,6 +182,8 @@ def webhook():
                             else:
                                 key = message[5:]
                                 logs("Key:" + key)
+                        elif message == "Print key":
+                            send_text_message(recipient_id, key)
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
