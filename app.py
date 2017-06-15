@@ -281,11 +281,12 @@ def EncryptDES(key, text, recipient_id):
     logs("secuencia Binaria:\n" + str(secBin))
     seq2 = getSubSecuencia(NumBits1, secBin)
     logs("secuencia 2:\n" + str(seq2))
-    with open('tmp/' + recipient_id + '.png', 'rb+') as img:
+    with open('tmp/' + recipient_id + '.png', 'rb') as img:
         content = img.read()
         imglen = len(content)
         content  = tobits(content)
         content = insert(content, seq2, message, imglen)
+    with open('tmp/' + recipient_id + '.png', 'wb') as img:
         img.write(content)
     with open('tmp/' + recipient_id + '.png', 'rb') as img:
         longi = img.read()
