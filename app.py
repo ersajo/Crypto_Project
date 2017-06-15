@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: iso-8859-15 -*-
+
 import time
 import os
 import sys
@@ -213,7 +216,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
-                        send_text_message(recipient_id, respuesta)
+                        #send_text_message(recipient_id, respuesta)
         return "Success"
 
 def DecryptDES(key, NumBits1, recipient_id, URL):
