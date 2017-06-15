@@ -182,7 +182,6 @@ def webhook():
                             else:
                                 key = message[5:]
                                 logs("Key:" + key)
-                        elif
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
