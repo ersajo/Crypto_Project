@@ -108,6 +108,7 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               42, 34, 43, 41, 13, 11, 45, 29,
               36,  3, 32, 27, 21, 40, 12, 31]
 
+key = ''
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
@@ -180,6 +181,7 @@ def webhook():
                             if len(message[5:]) != 8:
                                 send_text_message(recipient_id, 'The length of the key must be 8 bytes')
                             else:
+                                global key
                                 key = message[5:]
                                 logs("Key:" + key)
                         elif message == "Print key":
