@@ -280,7 +280,8 @@ def EncryptDES(key, text, recipient_id):
         content  = tobits(content)
         content = insert(content, seq2, message, imglen)
         img.write(content)
-        logs("Len img: " + str(len(img.read())))
+        longi = img.read()
+        logs("Len img: " + str(len(longi)))
     send_file(recipient_id, recipient_id + '.png')
 
 
