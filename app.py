@@ -238,8 +238,8 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     seq1 = expandir(NumBits1 % 8, temp)
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
     seq2 = getSubSecuencia(NumBits1, secBin)
-    getImageFromURL('temp' + recipient_id + '.txt', URL)
-    with open('tmp/temp' + recipient_id + '.txt','rb') as contenedor:
+    getImageFromURL('temp' + recipient_id + 't.txt', URL)
+    with open('tmp/temp' + recipient_id + 't.txt','rb') as contenedor:
         contenido = contenedor.read()
         contenido = tobits(contenido)
     cifrado = extract(contenido, seq2, NumBits1)
@@ -254,11 +254,11 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
 
 def EncryptDES(key, text, recipient_id):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
-    with open('tmp/' + recipient_id + '.txt', 'w') as out_file:
+    with open('tmp/' + recipient_id + 't.txt', 'w') as out_file:
         if len(text) % 8 != 0:
             text += ' ' * (8 - len(text) % 8)
         message = cipher.encrypt(text)
-    getImage(recipient_id + '.txt')
+    getImage(recipient_id + 't.txt')
     logs("Cifrado: " + str(message))
     key = tobits(key)
     C = genSubKey(key)
@@ -272,7 +272,7 @@ def EncryptDES(key, text, recipient_id):
     seq1 = expandir(NumBits1 % 8, temp)
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
     seq2 = getSubSecuencia(NumBits1, secBin)
-    with open('tmp/' + recipient_id + '.txt', 'rb+') as img:
+    with open('tmp/' + recipient_id + 't.txt', 'rb+') as img:
         content = img.read()
         imglen = len(content)
         content  = tobits(content)
