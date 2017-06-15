@@ -244,12 +244,11 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     cifrado = extract(contenido, seq2, NumBits1)
     if len(cifrado) % 8 != 0:
         cifrado += ' ' * (8 - len(cifrado) % 8)
-    logs("Cifrado: |" + str(cifrado) + "|")
+    logs("Cifrado: /" + str(cifrado) + "/")
     key = frombits(key)
-    logs("Key:" + key)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado)
-    logs("Mensaje: " + str(mensaje))
+    logs("Mensaje: /" + str(mensaje) + "/")
     return mensaje
 
 def EncryptDES(key, text, recipient_id):
@@ -257,6 +256,7 @@ def EncryptDES(key, text, recipient_id):
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
     cifrado = cipher.encrypt(text)
+    logs("Cifrado: /" + str(cifrado) + "/")
     with open('/tmp/' + recipient_id + '.txt','wb') as archivo:
         archivo.write(cifrado)
     getImage(recipient_id + '.png')
