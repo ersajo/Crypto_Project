@@ -200,7 +200,7 @@ def webhook():
                             send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
-                    """elif x['message'].get('attachments'):
+                    elif x['message'].get('attachments') and recipient_id == '1403775469717418':
                         obtenido = x['message']['attachments']
                         url = str(obtenido)
                         url = url.split("u'")
@@ -213,7 +213,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
                         logs("Respuesta: " + respuesta)
-                        #send_text_message(recipient_id, respuesta)"""
+                        #send_text_message(recipient_id, respuesta)
                 elif x.get("postback"):
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
@@ -243,7 +243,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     cifrado = extract(contenido, seq2, NumBits1)
     if len(cifrado) % 8 != 0:
         cifrado += ' ' * (8 - len(cifrado) % 8)
-    logs("Cifrado: " + str(cifrado))
+    logs("Cifrado: |" + str(cifrado) + "|")
     key = frombits(key)
     logs("Key:" + key)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
@@ -258,15 +258,11 @@ def EncryptDES(key, text, recipient_id):
     cifrado = cipher.encrypt(text)
     with open('/tmp/' + recipient_id + '.txt','wb') as archivo:
         archivo.write(cifrado)
-    logs("Cifrado: |" + str(cifrado) + "|")
-    logs("Cifrado longitud: " + str(len(cifrado)))
     getImage(recipient_id + '.png')
     key = tobits(key)
     C = genSubKey(key)
     with open('/tmp/' + recipient_id + '.txt', 'rb') as archivo:
         message = archivo.read()
-    logs("longitud mensaje: " + str(len(message)))
-    logs("Mensaje: |" + str(message) + "|")
     message = tobits(message)
     NumBits1 = len(message)
     k = 0
