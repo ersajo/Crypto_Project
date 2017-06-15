@@ -165,10 +165,13 @@ def uploaded_file(filename):
 
 @app.route('/', methods=['POST'])
 def webhook():
+    global key, text, BytesUser
     output = request.get_json()
     log(output)
     if output["object"] == "page":
-
+        logs("Key: " + key)
+        logs("Text: " + text)
+        logs("Bytes: " + str(BytesUser))
         for event in output["entry"]:
             messaging = event["messaging"]
             for x in messaging:
@@ -177,7 +180,6 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message == 'restart':
-                            global key, text, BytesUser
                             key = 'def'
                             text = 'def'
                             BytesUser = 0
@@ -186,23 +188,18 @@ def webhook():
                             if len(message[4:]) != 8:
                                 send_text_message(recipient_id, 'The length of the key must be 8 bytes')
                             else:
-                                global key
                                 key = message[4:]
                                 logs("Key:" + key)
                                 send_text_message(recipient_id, 'Success')
                         elif message == "Print key":
-                            global key
                             send_text_message(recipient_id, key)
                         elif message[:5] == "Text:":
-                            global text
                             text = message[5:]
                             logs("Text:" + text)
                             send_text_message(recipient_id, 'Success')
                         elif message == "Print text":
-                            global text
                             send_text_message(recipient_id,text)
                         elif message[:6] == "Bytes:":
-                            global BytesUser
                             tmpBytes = int(message[6:])
                             logs("tmpBytes:" + str(tmpBytes))
                             while (tmpBytes % 8 != 0):
@@ -211,10 +208,8 @@ def webhook():
                             logs("Bytes:" + str(BytesUser))
                             send_text_message(recipient_id, 'Success')
                         elif message == "Print bytes":
-                            global BytesUser
                             send_text_message(recipient_id, BytesUser)
                         elif message == "Encrypt":
-                            global key, text
                             EncryptDES(key, text, recipient_id)
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
