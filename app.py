@@ -211,7 +211,7 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 16*8, recipient_id, url)
+                        respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
                         logs("Respuesta: " + respuesta)
                         #send_text_message(recipient_id, respuesta)
                     else:
@@ -247,6 +247,7 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
         cifrado += ' ' * (8 - len(cifrado) % 8)
     logs("Cifrado: " + str(cifrado))
     key = frombits(key)
+    logs("Key:" + key)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado)
     logs("Mensaje: " + str(mensaje))
@@ -382,7 +383,7 @@ def insert(content, seq2, message, imglen):
     posSeq2 = 0
     posMensaje = 0
     longitud = len(seq2)
-    if longitud <= (imglen - 684) * 8:
+    if longitud <= ((imglen - 684) * 8):
         while longitud > 0:
             if seq2[posSeq2] == 1:
                 content[(684 * 8) + posSeq2] = message[posMensaje]
