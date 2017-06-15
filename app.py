@@ -226,7 +226,7 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 8     * 8, recipient_id, url)
+                        respuesta = DecryptDES('12345678', 8 * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
                         send_text_message(recipient_id, respuesta)
         return "Success"
@@ -403,7 +403,7 @@ def insert(content, seq2, message, imglen):
     if longitud <= ((imglen - 684) * 8):
         while longitud > 0:
             if seq2[posSeq2] == 1:
-                content[(684 * 8) + posSeq2] = message[posMensaje]
+                content[40 + posSeq2] = message[posMensaje]
                 posMensaje += 1
             posSeq2 += 1
             longitud -= 1
@@ -416,7 +416,7 @@ def extract(contenido, seq2, NumBits1):
     longitud = len(seq2)
     while longitud > 0:
         if seq2[posSeq2] == 1:
-            mensaje.append(contenido[(684 * 8) + posSeq2])
+            mensaje.append(contenido[40 + posSeq2])
         posSeq2 += 1
         longitud -=1
     mensaje = frombits(mensaje)
