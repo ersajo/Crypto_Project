@@ -256,7 +256,7 @@ def EncryptDES(key, text, recipient_id):
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
     cifrado = cipher.encrypt(text)
-    logs("Cifrado: /" + str(cifrado) + "/")
+    logs("Cifrado: |" + str(cifrado) + "|")
     with open('/tmp/' + recipient_id + '.txt','wb') as archivo:
         archivo.write(cifrado)
     getImage(recipient_id + '.png')
@@ -272,8 +272,11 @@ def EncryptDES(key, text, recipient_id):
         aux = C[k][i] ^ C[k+1][i]
         temp.append(aux)
     seq1 = expandir(NumBits1 % 8, temp)
+    logs("secuencia 1:\n" + str(seq1))
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
+    logs("secuencia Binaria:\n" + str(secBin))
     seq2 = getSubSecuencia(NumBits1, secBin)
+    logs("secuencia 2:\n" + str(seq2))
     with open('tmp/' + recipient_id + '.png', 'rb+') as img:
         content = img.read()
         imglen = len(content)
