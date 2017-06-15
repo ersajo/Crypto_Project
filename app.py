@@ -204,7 +204,7 @@ def webhook():
                         elif message[:6] == "Bytes:":
                             global BytesUser
                             tmpBytes = ord(message[6:])
-                            logs("tmpBytes:" + tmpBytes)
+                            logs("tmpBytes:" + str(tmpBytes))
                             while (tmpBytes % 8 != 0):
                                 tmpBytes += 1
                             BytesUser = tmpBytes
