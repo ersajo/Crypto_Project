@@ -114,10 +114,6 @@ ALLOWED_EXTENSIONS = set(['txt', 'png'])
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-key = ''
-text = ''
-status = 'inicio'
-
 @app.route('/', methods=['GET'])
 def verify():
     # when the endpoint is registered as a webhook, it must echo back
@@ -183,27 +179,11 @@ def webhook():
                             set_key('')
                             set_status('inicio')
                             send_text_message(recipient_id, 'Say Hello')
-                        elif message == 'Hello':
-                            set_status('Hola')
-                            send_text_message(recipient_id, "Hi, I'm Crypt2me. Write a 8 characters key...")
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
-                        elif status == 'Encrypt' and text == '' and key != '':
-                            set_text(message)
-                            EncryptDES(key, text, recipient_id)
-                            set_status('inicio')
-                            send_text_message(recipient_id, 'Finalizado')
-                        elif len(message) != 8 and (status == 'Hola' or status == 'retry'):
-                            set_status('retry')
-                            send_text_message(recipient_id, 'The length of the key is diferent to 8 characters...')
-                        elif len(message) == 8 and (status == 'Hola' or status == 'retry'):
-                            set_key(message)
-                            logs("Key: " + key)
-                            set_status('key')
-                            send_menu(recipient_id, "What do you want to do next?...")
                         else:
                             pass
-                    elif x['message'].get('attachments') and recipient_id == '1403775469717418':
+                    elif x['message'].get('attachments') and recipient_id != '430252837348461':
                         obtenido = x['message']['attachments']
                         url = str(obtenido)
                         url = url.split("u'")
@@ -216,7 +196,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
-                        #send_text_message(recipient_id, respuesta)
+                        send_text_message(recipient_id, respuesta)
         return "Success"
 
 def DecryptDES(key, NumBits1, recipient_id, URL):
