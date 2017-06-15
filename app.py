@@ -213,7 +213,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
                         logs("Respuesta: " + respuesta)
-                        #send_text_message(recipient_id, respuesta)
+                        send_text_message(recipient_id, respuesta)
                 elif x.get("postback"):
                     recipient_id = x['sender']['id']
                     postback = x["postback"]["payload"]
