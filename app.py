@@ -267,6 +267,7 @@ def EncryptDES(key, text, recipient_id):
     C = genSubKey(key)
     with open('tmp/file.txt', 'r') as archivo:
         message = archivo.read()
+    logs("longitud mensaje: " + str(len(message)))
     message = tobits(message)
     NumBits1 = len(message)
     k = 0
