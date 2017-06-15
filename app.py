@@ -169,7 +169,7 @@ def webhook():
     output = request.get_json()
     log(output)
     if output["object"] == "page":
-        logs("Key: " + key)
+        logs("Key:  " + key)
         logs("Text: " + text)
         logs("Bytes: " + str(BytesUser))
         for event in output["entry"]:
@@ -226,7 +226,7 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 8 * 8, recipient_id, url)
+                        respuesta = DecryptDES('12345678', 8     * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
                         send_text_message(recipient_id, respuesta)
         return "Success"
