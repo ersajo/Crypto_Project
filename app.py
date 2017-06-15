@@ -108,8 +108,6 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               42, 34, 43, 41, 13, 11, 45, 29,
               36,  3, 32, 27, 21, 40, 12, 31]
 
-status = ''
-
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
@@ -166,7 +164,6 @@ def uploaded_file(filename):
 def webhook():
     output = request.get_json()
     log(output)
-    logs("status: " + status)
     if output["object"] == "page":
 
         for event in output["entry"]:
@@ -179,8 +176,9 @@ def webhook():
                         if message == 'restart':
                             set_text('')
                             set_key('')
-                            set_status('inicio')
                             send_text_message(recipient_id, 'Say Hello')
+                        elif str(message)[:5] == "Key: ":
+                            logs("Key:" + message)
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
@@ -506,10 +504,6 @@ def set_key(value):
 def set_text(value):
     global text
     text = value
-
-def set_status(value):
-    global status
-    status = value
 
 def log(message):  # simple wrapper for logging to stdout on heroku
     print str(message)
