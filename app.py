@@ -211,9 +211,6 @@ def webhook():
                             send_text_message(recipient_id, BytesUser)
                         elif message == "Encrypt":
                             EncryptDES(key, text, recipient_id)
-                            key = 'def'
-                            text = 'def'
-                            BytesUser = 0
                         elif message == "Prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
@@ -231,9 +228,6 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES(key, BytesUser * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
-                        key = 'def'
-                        text = 'def'
-                        BytesUser = 0
                         send_text_message(recipient_id, respuesta)
         return "Success"
 
