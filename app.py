@@ -208,7 +208,7 @@ def webhook():
                             while (tmpBytes % 8 != 0):
                                 tmpBytes += 1
                             BytesUser = tmpBytes
-                            logs("Bytes:" + BytesUser)
+                            logs("Bytes:" + str(BytesUser))
                             send_text_message(recipient_id, 'Success')
                         elif message == "Print bytes":
                             global BytesUser
