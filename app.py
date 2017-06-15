@@ -234,13 +234,17 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
         aux = C[k][i] ^ C[k+1][i]
         temp.append(aux)
     seq1 = expandir(NumBits1 % 8, temp)
+    logs("secuencia 1:\n" + str(seq1))
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
+    logs("secuencia Binaria:\n" + str(secBin))
     seq2 = getSubSecuencia(NumBits1, secBin)
-    getImageFromURL('temp' + recipient_id + '.png', URL)
-    with open('tmp/temp' + recipient_id + '.png','rb') as contenedor:
+    logs("secuencia 2:\n" + str(seq2))
+    getImageFromURL('temp' + recipient_id + '.txt', URL)
+    with open('tmp/temp' + recipient_id + '.txt','rb') as contenedor:
         contenido = contenedor.read()
         logs("Len img: " + str(len(contenido)))
         contenido = tobits(contenido)
+        logs("contenido:\n" + str(contenido[:1000]))
     cifrado = extract(contenido, seq2, NumBits1)
     if len(cifrado) % 8 != 0:
         cifrado += ' ' * (8 - len(cifrado) % 8)
