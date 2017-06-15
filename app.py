@@ -240,7 +240,9 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     seq2 = getSubSecuencia(NumBits1, secBin)
     getImageFromURL('temp' + recipient_id + '.png', URL)
     with open('tmp/temp' + recipient_id + '.png','rb') as contenedor:
-        contenido = tobits(contenedor.read())
+        contenido = contenedor.read()
+        logs("longitud imagen recibida: "+ len(contenido))
+        contenido = tobits(contenido)
     cifrado = extract(contenido, seq2, NumBits1)
     if len(cifrado) % 8 != 0:
         cifrado += ' ' * (8 - len(cifrado) % 8)
@@ -272,10 +274,13 @@ def EncryptDES(key, text, recipient_id):
     secBin = getSecuenciaBin(NumBits1, C, seq1, k)
     seq2 = getSubSecuencia(NumBits1, secBin)
     with open('tmp/' + recipient_id + '.png', 'rb+') as img:
-        content = tobits(img.read())
-        content = insert(content, seq2, message)
+        content = img.read()
+        imglen = len(content)
+        logs("longitud imagen: " + str(imglen))
+        content  = tobits(content)
+        content = insert(content, seq2, message, imglen)
         img.write(content)
-
+        logs("longitud imagen procesada: " + str(len(img.read())))
     send_file(recipient_id, recipient_id + '.png')
 
 
@@ -375,19 +380,17 @@ def getSubSecuencia(unos,secBin):
         r += 1
     return seq2
 
-def insert(content, seq2, message):
+def insert(content, seq2, message, imglen):
     posSeq2 = 0
     posMensaje = 0
     longitud = len(seq2)
-    if longitud <= (3*400*200):
+    if longitud <= (imglen - 684) * 8:
         while longitud > 0:
             if seq2[posSeq2] == 1:
-                content[40 + posSeq2] = message[posMensaje]
+                content[(684 * 8) + posSeq2] = message[posMensaje]
                 posMensaje += 1
             posSeq2 += 1
             longitud -= 1
-    else:
-        print("Texto muy largo")
     content = frombits(content)
     return content
 
@@ -397,7 +400,7 @@ def extract(contenido, seq2, NumBits1):
     longitud = len(seq2)
     while longitud > 0:
         if seq2[posSeq2] == 1:
-            mensaje.append(contenido[40 + posSeq2])
+            mensaje.append(contenido[(684 * 8) + posSeq2])
         posSeq2 += 1
         longitud -=1
     mensaje = frombits(mensaje)
