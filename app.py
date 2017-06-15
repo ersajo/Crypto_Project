@@ -214,15 +214,6 @@ def webhook():
                         respuesta = DecryptDES('12345678', 8*8, recipient_id, url)
                         logs("Respuesta: " + respuesta)
                         send_text_message(recipient_id, respuesta)
-                elif x.get("postback"):
-                    recipient_id = x['sender']['id']
-                    postback = x["postback"]["payload"]
-                    if postback == "Encrypt":
-                        set_status('Encrypt')
-                        send_text_message(recipient_id, "Write the text that you want to encrypt...")
-                    elif postback == "Decrypt":
-                        set_status('Decrypt')
-                        send_text_message(recipient_id, 'Well done')
         return "Success"
 
 def DecryptDES(key, NumBits1, recipient_id, URL):
