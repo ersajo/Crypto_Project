@@ -212,7 +212,7 @@ def webhook():
                         elif message == "Encrypt":
                             EncryptDES(key, text, recipient_id)
                         elif message == "Prueba":
-                            EncryptDES('12345678', '2014630459', recipient_id)
+                            EncryptDES('12345678', 'justthewayyouare', recipient_id)
                         else:
                             pass
                     elif x['message'].get('attachments') and recipient_id != '430252837348461':
@@ -226,9 +226,9 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 10 * 8, recipient_id, url)
+                        respuesta = DecryptDES('12345678', 16 * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
-                        send_text_message(recipient_id, respuesta)
+                        #send_text_message(recipient_id, respuesta)
         return "Success"
 
 def DecryptDES(key, NumBits1, recipient_id, URL):
