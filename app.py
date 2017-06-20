@@ -211,7 +211,7 @@ def webhook():
                             send_text_message(recipient_id, BytesUser)
                         elif message == "Encrypt":
                             EncryptDES(key, text, recipient_id)
-                        elif message == "Prueba":
+                        elif message == "prueba":
                             EncryptDES('12345678', 'Ciao', recipient_id)
                         else:
                             pass
