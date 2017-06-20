@@ -226,7 +226,7 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 8 * 8, recipient_id, url)
+                        respuesta = DecryptDES('12345678', 10 * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
                         send_text_message(recipient_id, respuesta)
         return "Success"
