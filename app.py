@@ -187,7 +187,7 @@ def webhook():
                             for char in message[35:]:
                                 if(char == ' '):
                                     break
-                                else
+                                else:
                                     tmpBytes += char
                             tmpBytes = int(tmpBytes)
                             logs("tmpBytes:" + str(tmpBytes))
