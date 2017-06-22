@@ -109,6 +109,8 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               36,  3, 32, 27, 21, 40, 12, 31]
 
 global key, BytesUser
+key = ''
+BytesUser = 0
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
