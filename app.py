@@ -182,9 +182,7 @@ def webhook():
                         if message[:5] == "Cifra":
                             llave = message[20:28]
                             cadena = message[39:]
-                            send_text_message(recipient_id, 'Cifrar')
-                            send_text_message(recipient_id, 'Llave: ' + llave)
-                            send_text_message(recipient_id, 'Mensaje: ' + cadena)
+                            EncryptDES(llave, cadena, recipient_id)
                         elif message == "Print key":
                             send_text_message(recipient_id, key)
                         elif message[:5] == "Text:":
