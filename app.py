@@ -182,7 +182,14 @@ def webhook():
                         elif message[:12] == "Usa la llave":
                             global BytesUser, key
                             key = message[13:21]
-                            tmpBytes = int(message[35])
+
+                            tmpBytes = ''
+                            for char in message[35:]:
+                                if(char == ' '):
+                                    break
+                                else
+                                    tmpBytes += char
+                            tmpBytes = int(tmpBytes)
                             logs("tmpBytes:" + str(tmpBytes))
                             while (tmpBytes % 8 != 0):
                                 tmpBytes += 1
