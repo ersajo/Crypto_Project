@@ -180,7 +180,6 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message[:5] == "Cifra":
-                            'Cifra con la llave 12345678 el mensaje:'
                             llave = message[5:19]
                             cadena = message[39:]
                             send_text_message(recipient_id, 'Cifrar')
