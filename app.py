@@ -178,31 +178,25 @@ def webhook():
                         message = x['message']['text']
                         if message[:5] == "Cifra":
                             llave = message[19:27]
-                            cadena = message[39:]
+                            cadena = message[40:]
                             EncryptDES(llave, cadena, recipient_id)
-                        elif message == "Print key":
-                            send_text_message(recipient_id, key)
-                        elif message[:5] == "Text:":
-                            text = message[5:]
-                            logs("Text:" + text)
-                            send_text_message(recipient_id, 'Success')
-                        elif message == "Print text":
-                            send_text_message(recipient_id,text)
-                        elif message[:6] == "Bytes:":
-                            tmpBytes = int(message[6:])
+                        elif message[:12] == "Usa la llave":
+                            global BytesUser, key
+                            key = message[13:21]
+                            tmpBytes = int(message[35])
                             logs("tmpBytes:" + str(tmpBytes))
                             while (tmpBytes % 8 != 0):
                                 tmpBytes += 1
                             BytesUser = tmpBytes
                             logs("Bytes:" + str(BytesUser))
-                            send_text_message(recipient_id, 'Success')
-                        elif message == "Print bytes":
                             send_text_message(recipient_id, BytesUser)
                         elif message == "Encrypt":
                             EncryptDES(key, text, recipient_id)
                         elif message == "Prueba":
                             EncryptDES('12345678', 'justthewayyouare', recipient_id)
                         else:
+                            send_text_message(recipient_id, 'El formato para cifrar debe ser el siguiente: Cifra con la llave "Llave de longitud 8" el mensaje: "Mensaje a cifrar"')
+                            send_text_message(recipient_id, 'El formato para descifrar debe ser el siguiente: Usa la llave "Llave de longitud 8" para extraer # bytes. Despues adjunta la imagen en formato.txt')
                             pass
                     elif x['message'].get('attachments') and recipient_id != '430252837348461':
                         obtenido = x['message']['attachments']
