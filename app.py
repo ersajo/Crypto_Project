@@ -180,11 +180,11 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message[:5] == "Cifra":
-                            llave = message[5:19]
+                            llave = message[20:28]
                             cadena = message[39:]
                             send_text_message(recipient_id, 'Cifrar')
                             send_text_message(recipient_id, 'Llave: ' + llave)
-                            send_text_message(recipient_id, 'Mensaje: ' + message)
+                            send_text_message(recipient_id, 'Mensaje: ' + cadena)
                         elif message == "Print key":
                             send_text_message(recipient_id, key)
                         elif message[:5] == "Text:":
