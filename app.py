@@ -177,7 +177,7 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message[:5] == "Cifra":
-                            llave = message[19:28]
+                            llave = message[19:27]
                             cadena = message[39:]
                             EncryptDES(llave, cadena, recipient_id)
                         elif message == "Print key":
