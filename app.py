@@ -107,7 +107,7 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
                3, 33,  6, 28, 18, 21,  1, 17,
               42, 34, 43, 41, 13, 11, 45, 29,
               36,  3, 32, 27, 21, 40, 12, 31]
-global key, BytesUser
+
 key = ''
 BytesUser = 0
 UPLOAD_FOLDER = 'tmp/'
@@ -166,6 +166,9 @@ def uploaded_file(filename):
 def webhook():
     output = request.get_json()
     log(output)
+
+    logs("Bytes:" + str(BytesUser))
+    logs("Key:  |" + key + "|")
     if output["object"] == "page":
         for event in output["entry"]:
             messaging = event["messaging"]
@@ -179,8 +182,8 @@ def webhook():
                             cadena = message[40:]
                             EncryptDES(llave, cadena, recipient_id)
                         elif message[:12] == "Usa la llave":
+                            global key, BytesUser
                             key = message[13:21]
-
                             tmpBytes = ''
                             for char in message[35:]:
                                 if(char == ' '):
@@ -201,6 +204,7 @@ def webhook():
                             send_text_message(recipient_id, 'El formato para descifrar debe ser el siguiente: Usa la llave "Llave de longitud 8" para extraer # bytes. Despues adjunta la imagen en formato.txt')
                             pass
                     elif x['message'].get('attachments') and recipient_id != '430252837348461':
+                        global BytesUser, key
                         obtenido = x['message']['attachments']
                         url = str(obtenido)
                         url = url.split("u'")
@@ -214,6 +218,8 @@ def webhook():
                         respuesta = DecryptDES(key, BytesUser * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
                         #send_text_message(recipient_id, respuesta)
+                        BytesUser = 0
+                        key = ''
         return "Success"
 
 def DecryptDES(llave, NumBits1, recipient_id, URL):
