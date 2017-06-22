@@ -191,8 +191,6 @@ def webhook():
                             send_text_message(recipient_id, BytesUser)
                         elif message == "Encrypt":
                             EncryptDES(key, text, recipient_id)
-                        elif message == "Prueba":
-                            EncryptDES('12345678', 'justthewayyouare', recipient_id)
                         else:
                             send_text_message(recipient_id, 'El formato para cifrar debe ser el siguiente: Cifra con la llave "Llave de longitud 8" el mensaje: "Mensaje a cifrar"')
                             send_text_message(recipient_id, 'El formato para descifrar debe ser el siguiente: Usa la llave "Llave de longitud 8" para extraer # bytes. Despues adjunta la imagen en formato.txt')
@@ -214,9 +212,9 @@ def webhook():
                         #send_text_message(recipient_id, respuesta)
         return "Success"
 
-def DecryptDES(key, NumBits1, recipient_id, URL):
-    key = tobits(key)
-    C = genSubKey(key)
+def DecryptDES(llave, NumBits1, recipient_id, URL):
+    llave = tobits(llave)
+    C = genSubKey(llave)
     k = 0
     temp = []
     for i in range(48):
@@ -238,8 +236,8 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     if len(cifrado) % 8 != 0:
         cifrado += ' ' * (8 - len(cifrado) % 8)
     logs("Cifrado: /" + str(cifrado) + "/")
-    key = frombits(key)
-    cipher = DES.new(key, DES.MODE_OFB, '12345678')
+    llave = frombits(llave)
+    cipher = DES.new(llave, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado)
     logs("Mensaje: /" + str(mensaje) + "/")
     global key, BytesUser
