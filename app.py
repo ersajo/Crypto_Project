@@ -109,8 +109,8 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               36,  3, 32, 27, 21, 40, 12, 31]
 
 global key, BytesUser
-key = '12345678'
-BytesUser = 4
+key = ''
+BytesUser =
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
@@ -197,7 +197,7 @@ def webhook():
                                 tmpBytes += 1
                             BytesUser = tmpBytes
                             logs("Bytes:" + str(BytesUser))
-                            send_text_message(recipient_id, BytesUser)
+                            send_text_message(recipient_id, 'Realizado')
                         elif message == "Encrypt":
                             EncryptDES(key, text, recipient_id)
                         else:
