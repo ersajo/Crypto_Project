@@ -177,7 +177,7 @@ def webhook():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         if message[:5] == "Cifra":
-                            llave = message[20:28]
+                            llave = message[19:28]
                             cadena = message[39:]
                             EncryptDES(llave, cadena, recipient_id)
                         elif message == "Print key":
@@ -215,7 +215,7 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 8 * 8, recipient_id, url)
+                        respuesta = DecryptDES('12345678', 4 * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
                         #send_text_message(recipient_id, respuesta)
         return "Success"
