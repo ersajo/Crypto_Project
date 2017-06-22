@@ -179,18 +179,13 @@ def webhook():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        if message == 'restart':
-                            key = 'def'
-                            text = 'def'
-                            BytesUser = 0
-                            send_text_message(recipient_id, 'Values set to default')
-                        elif message[:4] == "Key:":
-                            if len(message[4:]) != 8:
-                                send_text_message(recipient_id, 'The length of the key must be 8 bytes')
-                            else:
-                                key = message[4:]
-                                logs("Key:" + key)
-                                send_text_message(recipient_id, 'Success')
+                        if message[:5] == "Cifra":
+                            'Cifra con la llave 12345678 el mensaje:'
+                            llave = message[5:19]
+                            cadena = message[39:]
+                            send_text_message(recipient_id, 'Cifrar')
+                            send_text_message(recipient_id, 'Llave: ' + llave)
+                            send_text_message(recipient_id, 'Mensaje: ' + message)
                         elif message == "Print key":
                             send_text_message(recipient_id, key)
                         elif message[:5] == "Text:":
