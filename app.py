@@ -109,8 +109,6 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               36,  3, 32, 27, 21, 40, 12, 31]
 
 global key, BytesUser
-key = ''
-BytesUser =
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
 
@@ -218,7 +216,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES(key, BytesUser * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
-                        #send_text_message(recipient_id, respuesta)
+                        send_text_message(recipient_id, respuesta)
                         BytesUser = 0
                         key = ''
         return "Success"
