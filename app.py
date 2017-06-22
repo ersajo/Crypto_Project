@@ -108,8 +108,7 @@ perSecBin8 = [20,  1, 10, 47,  7, 29,  4, 16,
               42, 34, 43, 41, 13, 11, 45, 29,
               36,  3, 32, 27, 21, 40, 12, 31]
 
-key = 'def'
-text = 'def'
+key = ''
 BytesUser = 0
 UPLOAD_FOLDER = 'tmp/'
 ALLOWED_EXTENSIONS = set(['txt', 'png'])
@@ -199,6 +198,7 @@ def webhook():
                             send_text_message(recipient_id, 'El formato para descifrar debe ser el siguiente: Usa la llave "Llave de longitud 8" para extraer # bytes. Despues adjunta la imagen en formato.txt')
                             pass
                     elif x['message'].get('attachments') and recipient_id != '430252837348461':
+                        global key, BytesUser
                         obtenido = x['message']['attachments']
                         url = str(obtenido)
                         url = url.split("u'")
@@ -209,7 +209,7 @@ def webhook():
                             j += 1
                         url = url[:(len(url)-4)]
                         logs("URL: " + url)
-                        respuesta = DecryptDES('12345678', 8 * 8, recipient_id, url)
+                        respuesta = DecryptDES(key, BytesUser * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
                         #send_text_message(recipient_id, respuesta)
         return "Success"
@@ -242,6 +242,9 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     mensaje = cipher.decrypt(cifrado)
     logs("Mensaje: /" + str(mensaje) + "/")
+    global key, BytesUser
+    key = ''
+    BytesUser = 0
     return mensaje.strip()
 
 def EncryptDES(key, text, recipient_id):
