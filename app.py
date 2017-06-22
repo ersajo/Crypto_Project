@@ -169,9 +169,6 @@ def webhook():
     output = request.get_json()
     log(output)
     if output["object"] == "page":
-        logs("Key:  " + key)
-        logs("Text: " + text)
-        logs("Bytes: " + str(BytesUser))
         for event in output["entry"]:
             messaging = event["messaging"]
             for x in messaging:
@@ -220,7 +217,7 @@ def webhook():
                         logs("URL: " + url)
                         respuesta = DecryptDES('12345678', 8 * 8, recipient_id, url)
                         logs("Respuesta: |" + respuesta + "|")
-                        send_text_message(recipient_id, respuesta)
+                        #send_text_message(recipient_id, respuesta)
         return "Success"
 
 def DecryptDES(key, NumBits1, recipient_id, URL):
@@ -254,6 +251,8 @@ def DecryptDES(key, NumBits1, recipient_id, URL):
     return mensaje.strip()
 
 def EncryptDES(key, text, recipient_id):
+    logs("Key:  " + key)
+    logs("Text: " + text)
     cipher = DES.new(key, DES.MODE_OFB, '12345678')
     if len(text) % 8 != 0:
         text += ' ' * (8 - len(text) % 8)
